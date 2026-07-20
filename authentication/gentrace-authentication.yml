@@ -1,0 +1,13 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/gentrace-openapi-original.json
+summary:
+  types:
+  - http
+schemes:
+- name: bearerAuth
+  type: http
+  scheme: bearer
+  description: 'Enter Gentrace API key (Format: Authorization: Bearer <token>)'
+  sources:
+  - openapi/gentrace-openapi-original.json
