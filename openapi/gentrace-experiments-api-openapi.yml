@@ -1,0 +1,361 @@
+openapi: 3.1.0
+info:
+  title: Gentrace Datasets Experiments API
+  version: 0.1.0
+  description: API documentation for Gentrace services.
+  contact:
+    name: Gentrace
+    url: https://gentrace.ai
+    email: support@gentrace.ai
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+servers:
+- url: https://gentrace.ai/api
+  description: API Endpoint
+security:
+- bearerAuth: []
+tags:
+- name: Experiments
+paths:
+  /v4/experiments:
+    get:
+      summary: List experiments
+      description: List experiments
+      operationId: listExperiments
+      tags:
+      - Experiments
+      parameters:
+      - $ref: '#/components/parameters/PipelineIdQueryParam'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Experiment'
+                required:
+                - data
+        '400':
+          description: Client provided an invalid request for the experiment. Please check the request format and parameters.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
+        '401':
+          description: No valid API key provided.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '404':
+          description: The experiment resource does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '500':
+          description: Something went wrong on Gentrace's end.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+    post:
+      summary: Create a experiment
+      description: Create a new experiment
+      operationId: createExperiment
+      tags:
+      - Experiments
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateExperiment'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Experiment'
+        '400':
+          description: Client provided an invalid request for the experiment. Please check the request format and parameters.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
+        '401':
+          description: No valid API key provided.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '404':
+          description: The experiment resource does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '500':
+          description: Something went wrong on Gentrace's end.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+  /v4/experiments/{id}:
+    get:
+      summary: Get a single experiment
+      description: Retrieve the details of a experiment by ID
+      operationId: getExperiment
+      tags:
+      - Experiments
+      parameters:
+      - $ref: '#/components/parameters/ExperimentIdPathParam'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Experiment'
+        '400':
+          description: Client provided an invalid request for the experiment. Please check the request format and parameters.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
+        '401':
+          description: No valid API key provided.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '404':
+          description: The experiment resource does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '500':
+          description: Something went wrong on Gentrace's end.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+    post:
+      summary: Update a experiment
+      description: Update the details of a experiment by ID
+      operationId: updateExperiment
+      tags:
+      - Experiments
+      parameters:
+      - $ref: '#/components/parameters/ExperimentIdPathParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateExperiment'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Experiment'
+        '400':
+          description: Client provided an invalid request for the experiment. Please check the request format and parameters.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
+        '401':
+          description: No valid API key provided.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '404':
+          description: The experiment resource does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '500':
+          description: Something went wrong on Gentrace's end.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+components:
+  schemas:
+    Experiment:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Experiment UUID
+          example: 123e4567-e89b-12d3-a456-426614174000
+        createdAt:
+          type: string
+          description: Creation timestamp (ISO 8601)
+          example: '2025-04-01T00:00:00.000Z'
+        updatedAt:
+          type: string
+          description: Last update timestamp (ISO 8601)
+          example: '2025-04-01T00:00:00.000Z'
+        name:
+          type:
+          - string
+          - 'null'
+          description: Friendly experiment name
+          example: OpenAI o3-mini prompt
+        pipelineId:
+          type: string
+          description: Pipeline UUID
+          example: 123e4567-e89b-12d3-a456-426614174000
+        metadata:
+          type:
+          - object
+          - 'null'
+          additionalProperties: true
+          description: Metadata
+          example:
+            key: value
+      required:
+      - id
+      - createdAt
+      - updatedAt
+      - name
+      - pipelineId
+      - metadata
+    UnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Authentication error details
+          example: Invalid or expired API key
+      required:
+      - message
+    UpdateExperiment:
+      type: object
+      properties:
+        name:
+          type:
+          - string
+          - 'null'
+          description: Friendly experiment name
+          example: OpenAI o3-mini prompt
+        metadata:
+          type:
+          - object
+          - 'null'
+          additionalProperties: true
+          description: Metadata
+          example:
+            key: value
+        status:
+          type: string
+          enum:
+          - GENERATING
+          - EVALUATING
+          description: Status
+          example: GENERATING
+    PipelineIdQuery:
+      type: string
+      format: uuid
+      description: Filter to the datasets for a specific pipeline by UUID
+      example: 123e4567-e89b-12d3-a456-426614174000
+    BadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: A description of the validation error
+          example: 'Invalid parameters: ''name'' field is required'
+      required:
+      - message
+    NotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Resource not found details
+          example: Resource with ID '123e4567-e89b-12d3-a456-426614174000' not found
+      required:
+      - message
+    ExperimentIdParam:
+      type: string
+      format: uuid
+      description: Experiment UUID
+      example: 123e4567-e89b-12d3-a456-426614174000
+    InternalServerError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Internal server error details
+          example: Internal server error occurred while processing the request
+      required:
+      - message
+    CreateExperiment:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Friendly experiment name
+          example: OpenAI o3-mini prompt
+        pipelineId:
+          type: string
+          format: uuid
+          description: The ID of the pipeline to create the experiment for
+          example: 123e4567-e89b-12d3-a456-426614174000
+        metadata:
+          type: object
+          additionalProperties: true
+          description: Optional metadata for the experiment
+          example:
+            promptTemplate:
+              type: string
+              value: Hello, {{ name }}!
+      required:
+      - pipelineId
+      additionalProperties: false
+      description: Creates a new experiment with the given pipeline ID
+      examples:
+      - pipelineId: 123e4567-e89b-12d3-a456-426614174000
+        name: OpenAI o3-mini prompt
+        metadata:
+          promptTemplate:
+            type: string
+            value: Hello, {{ name }}!
+  parameters:
+    ExperimentIdPathParam:
+      in: path
+      name: id
+      description: Experiment UUID
+      schema:
+        $ref: '#/components/schemas/ExperimentIdParam'
+      required: true
+    PipelineIdQueryParam:
+      in: query
+      name: pipelineId
+      description: Filter to the datasets for a specific pipeline by UUID
+      schema:
+        $ref: '#/components/schemas/PipelineIdQuery'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: 'Enter Gentrace API key (Format: Authorization: Bearer <token>)'
+externalDocs:
+  url: https://github.com/gentrace/gentrace-openapi
+  description: Gentrace OpenAPI Github

@@ -1,0 +1,384 @@
+openapi: 3.1.0
+info:
+  title: Gentrace Datasets TestCases API
+  version: 0.1.0
+  description: API documentation for Gentrace services.
+  contact:
+    name: Gentrace
+    url: https://gentrace.ai
+    email: support@gentrace.ai
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+servers:
+- url: https://gentrace.ai/api
+  description: API Endpoint
+security:
+- bearerAuth: []
+tags:
+- name: TestCases
+paths:
+  /v4/test-cases:
+    get:
+      summary: List test cases
+      description: List test cases
+      operationId: listTestCases
+      tags:
+      - TestCases
+      parameters:
+      - $ref: '#/components/parameters/DatasetIdQueryParam'
+      - $ref: '#/components/parameters/PipelineIdQueryParam'
+      - $ref: '#/components/parameters/PipelineSlugQueryParam'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/TestCase'
+                required:
+                - data
+        '400':
+          description: Client provided an invalid request for the test case. Please check the request format and parameters.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
+        '401':
+          description: No valid API key provided.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '404':
+          description: The test case resource does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '500':
+          description: Something went wrong on Gentrace's end.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+    post:
+      summary: Create a test case
+      description: Create a new test case
+      operationId: createTestCase
+      tags:
+      - TestCases
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTestCase'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TestCase'
+        '400':
+          description: Client provided an invalid request for the test case. Please check the request format and parameters.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
+        '401':
+          description: No valid API key provided.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '404':
+          description: The test case resource does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '500':
+          description: Something went wrong on Gentrace's end.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+  /v4/test-cases/{id}:
+    get:
+      summary: Get a single test case
+      description: Retrieve the details of a test case by ID
+      operationId: getTestCase
+      tags:
+      - TestCases
+      parameters:
+      - $ref: '#/components/parameters/TestCaseIdPathParam'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TestCase'
+        '400':
+          description: Client provided an invalid request for the test case. Please check the request format and parameters.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
+        '401':
+          description: No valid API key provided.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '404':
+          description: The test case resource does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '500':
+          description: Something went wrong on Gentrace's end.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+    delete:
+      summary: Delete a test case
+      description: Delete a test case by ID
+      operationId: deleteTestCase
+      tags:
+      - TestCases
+      parameters:
+      - $ref: '#/components/parameters/TestCaseIdPathParam'
+      responses:
+        '204':
+          description: Successful response
+        '400':
+          description: Client provided an invalid request for the test case. Please check the request format and parameters.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
+        '401':
+          description: No valid API key provided.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '404':
+          description: The test case resource does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '500':
+          description: Something went wrong on Gentrace's end.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+components:
+  parameters:
+    PipelineSlugQueryParam:
+      in: query
+      name: pipelineSlug
+      description: Pipeline slug
+      schema:
+        $ref: '#/components/schemas/PipelineSlugQuery'
+    PipelineIdQueryParam:
+      in: query
+      name: pipelineId
+      description: Filter to the datasets for a specific pipeline by UUID
+      schema:
+        $ref: '#/components/schemas/PipelineIdQuery'
+    DatasetIdQueryParam:
+      in: query
+      name: datasetId
+      description: Dataset ID
+      schema:
+        $ref: '#/components/schemas/DatasetIdQuery'
+    TestCaseIdPathParam:
+      in: path
+      name: id
+      description: Test Case UUID
+      schema:
+        $ref: '#/components/schemas/TestCaseIdParam'
+      required: true
+  schemas:
+    TestCase:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Test Case UUID
+          example: a1b2c3d4-e5f6-7890-1234-567890abcdef
+        createdAt:
+          type: string
+          description: Creation timestamp (ISO 8601)
+          example: '2025-04-01T00:00:00.000Z'
+        updatedAt:
+          type: string
+          description: Last update timestamp (ISO 8601)
+          example: '2025-04-01T00:00:00.000Z'
+        inputs:
+          type: object
+          additionalProperties: true
+          description: Input data for the test case
+          example:
+            query: What is the capital of France?
+        expectedOutputs:
+          type:
+          - object
+          - 'null'
+          additionalProperties: true
+          description: Expected output data for the test case
+          example:
+            answer: Paris
+        datasetId:
+          type: string
+          description: Associated Dataset UUID
+          example: 123e4567-e89b-12d3-a456-426614174000
+        name:
+          type: string
+          description: Test Case name
+          example: Capital of France query
+        pipelineId:
+          type: string
+          format: uuid
+          description: Associated Pipeline UUID
+          example: abcdef12-3456-7890-abcd-ef1234567890
+        archivedAt:
+          type:
+          - string
+          - 'null'
+          description: Archive timestamp (ISO 8601)
+          example: '2025-04-01T00:00:00.000Z'
+        deletedAt:
+          type:
+          - string
+          - 'null'
+          description: Deletion timestamp (ISO 8601)
+          example: '2025-04-01T00:00:00.000Z'
+      required:
+      - id
+      - createdAt
+      - updatedAt
+      - inputs
+      - expectedOutputs
+      - datasetId
+      - name
+      - pipelineId
+      - archivedAt
+      - deletedAt
+    UnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Authentication error details
+          example: Invalid or expired API key
+      required:
+      - message
+    PipelineSlugQuery:
+      type: string
+      minLength: 1
+      description: Pipeline slug
+      example: email-summarizer
+    DatasetIdQuery:
+      type: string
+      format: uuid
+      description: Dataset ID
+      example: 123e4567-e89b-12d3-a456-426614174000
+    PipelineIdQuery:
+      type: string
+      format: uuid
+      description: Filter to the datasets for a specific pipeline by UUID
+      example: 123e4567-e89b-12d3-a456-426614174000
+    BadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: A description of the validation error
+          example: 'Invalid parameters: ''name'' field is required'
+      required:
+      - message
+    NotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Resource not found details
+          example: Resource with ID '123e4567-e89b-12d3-a456-426614174000' not found
+      required:
+      - message
+    TestCaseIdParam:
+      type: string
+      format: uuid
+      description: Test Case UUID
+      example: 123e4567-e89b-12d3-a456-426614174000
+    InternalServerError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Internal server error details
+          example: Internal server error occurred while processing the request
+      required:
+      - message
+    CreateTestCase:
+      type: object
+      properties:
+        datasetId:
+          type: string
+          format: uuid
+          description: Dataset UUID
+          example: b2c3d4e5-f6a7-8901-2345-67890abcdef1
+        name:
+          type: string
+          minLength: 1
+          description: Test case name
+          example: Prompting with a SQL query that does not return any results
+        inputs:
+          type: object
+          additionalProperties: true
+          description: Test case inputs as a JSON object
+          example:
+            query: What is the capital of France?
+        expectedOutputs:
+          type: object
+          additionalProperties: true
+          default: {}
+          description: Optional expected outputs as a JSON object
+          example:
+            result: No results found
+      required:
+      - datasetId
+      - name
+      - inputs
+      additionalProperties: false
+      description: Test case creation parameters
+      example:
+        datasetId: b2c3d4e5-f6a7-8901-2345-67890abcdef1
+        name: Prompting with a SQL query that does not return any results
+        inputs:
+          query: What is the capital of France?
+        expectedOutputs:
+          result: No results found
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: 'Enter Gentrace API key (Format: Authorization: Bearer <token>)'
+externalDocs:
+  url: https://github.com/gentrace/gentrace-openapi
+  description: Gentrace OpenAPI Github

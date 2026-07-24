@@ -1,0 +1,382 @@
+openapi: 3.1.0
+info:
+  title: Gentrace Datasets API
+  version: 0.1.0
+  description: API documentation for Gentrace services.
+  contact:
+    name: Gentrace
+    url: https://gentrace.ai
+    email: support@gentrace.ai
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+servers:
+- url: https://gentrace.ai/api
+  description: API Endpoint
+security:
+- bearerAuth: []
+tags:
+- name: Datasets
+paths:
+  /v4/datasets:
+    get:
+      summary: List datasets
+      description: List datasets
+      operationId: listDatasets
+      tags:
+      - Datasets
+      parameters:
+      - $ref: '#/components/parameters/PipelineIdQueryParam'
+      - $ref: '#/components/parameters/PipelineSlugQueryParam'
+      - $ref: '#/components/parameters/ArchivedQueryParam'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Dataset'
+                required:
+                - data
+        '400':
+          description: Client provided an invalid request for the dataset. Please check the request format and parameters.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
+        '401':
+          description: No valid API key provided.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '404':
+          description: The dataset resource does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '500':
+          description: Something went wrong on Gentrace's end.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+    post:
+      summary: Create a dataset
+      description: Create a new dataset
+      operationId: createDataset
+      tags:
+      - Datasets
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateDataset'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Dataset'
+        '400':
+          description: Client provided an invalid request for the dataset. Please check the request format and parameters.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
+        '401':
+          description: No valid API key provided.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '404':
+          description: The dataset resource does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '500':
+          description: Something went wrong on Gentrace's end.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+  /v4/datasets/{id}:
+    get:
+      summary: Get a single dataset
+      description: Retrieve the details of a dataset by ID
+      operationId: getDataset
+      tags:
+      - Datasets
+      parameters:
+      - $ref: '#/components/parameters/DatasetIdPathParam'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Dataset'
+        '400':
+          description: Client provided an invalid request for the dataset. Please check the request format and parameters.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
+        '401':
+          description: No valid API key provided.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '404':
+          description: The dataset resource does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '500':
+          description: Something went wrong on Gentrace's end.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+    post:
+      summary: Update a dataset
+      description: Update the details of a dataset by ID
+      operationId: updateDataset
+      tags:
+      - Datasets
+      parameters:
+      - $ref: '#/components/parameters/DatasetIdPathParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateDataset'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Dataset'
+        '400':
+          description: Client provided an invalid request for the dataset. Please check the request format and parameters.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
+        '401':
+          description: No valid API key provided.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '404':
+          description: The dataset resource does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '500':
+          description: Something went wrong on Gentrace's end.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+components:
+  parameters:
+    PipelineSlugQueryParam:
+      in: query
+      name: pipelineSlug
+      description: Pipeline slug
+      schema:
+        $ref: '#/components/schemas/PipelineSlugQuery'
+    DatasetIdPathParam:
+      in: path
+      name: id
+      description: Dataset UUID
+      schema:
+        $ref: '#/components/schemas/DatasetIdParam'
+      required: true
+    ArchivedQueryParam:
+      in: query
+      name: archived
+      description: Flag to include archived datasets
+      schema:
+        $ref: '#/components/schemas/ArchivedQuery'
+    PipelineIdQueryParam:
+      in: query
+      name: pipelineId
+      description: Filter to the datasets for a specific pipeline by UUID
+      schema:
+        $ref: '#/components/schemas/PipelineIdQuery'
+  schemas:
+    UnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Authentication error details
+          example: Invalid or expired API key
+      required:
+      - message
+    PipelineSlugQuery:
+      type: string
+      minLength: 1
+      description: Pipeline slug
+      example: email-summarizer
+    ArchivedQuery:
+      type: boolean
+      description: Flag to include archived datasets
+      example: false
+    PipelineIdQuery:
+      type: string
+      format: uuid
+      description: Filter to the datasets for a specific pipeline by UUID
+      example: 123e4567-e89b-12d3-a456-426614174000
+    CreateDataset:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Dataset name
+          example: Dataset - negative user feedback - 2025-04-01
+        description:
+          type:
+          - string
+          - 'null'
+          description: Dataset description
+          example: Negative user feedback collected from our production environment
+        isGolden:
+          type: boolean
+          description: Whether the dataset is golden
+          example: false
+        pipelineSlug:
+          type: string
+          description: Pipeline slug (mutually exclusive with pipelineId)
+          example: email-summarizer
+        pipelineId:
+          type: string
+          format: uuid
+          description: Pipeline ID (mutually exclusive with pipelineSlug)
+          example: 123e4567-e89b-12d3-a456-426614174000
+      required:
+      - name
+      - description
+    BadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: A description of the validation error
+          example: 'Invalid parameters: ''name'' field is required'
+      required:
+      - message
+    UpdateDataset:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Dataset name
+          example: Dataset - negative user feedback - 2025-04-01
+        description:
+          type:
+          - string
+          - 'null'
+          description: Dataset description
+          example: Negative user feedback collected from our production environment
+        isGolden:
+          type: boolean
+          description: Set the dataset as the golden dataset
+          example: true
+        isArchived:
+          type: boolean
+          description: Archive the dataset
+          example: true
+    DatasetIdParam:
+      type: string
+      format: uuid
+      description: Dataset UUID
+      example: 123e4567-e89b-12d3-a456-426614174000
+    NotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Resource not found details
+          example: Resource with ID '123e4567-e89b-12d3-a456-426614174000' not found
+      required:
+      - message
+    InternalServerError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Internal server error details
+          example: Internal server error occurred while processing the request
+      required:
+      - message
+    Dataset:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Dataset UUID
+          example: 123e4567-e89b-12d3-a456-426614174000
+        createdAt:
+          type: string
+          description: Creation timestamp (ISO 8601)
+          example: '2025-04-01T00:00:00.000Z'
+        updatedAt:
+          type: string
+          description: Last update timestamp (ISO 8601)
+          example: '2025-04-01T00:00:00.000Z'
+        name:
+          type: string
+          description: Dataset name
+          example: Dataset - negative user feedback - 2025-04-01
+        description:
+          type:
+          - string
+          - 'null'
+          description: Dataset description
+          example: Negative user feedback collected from our production environment
+        archivedAt:
+          type:
+          - string
+          - 'null'
+          description: Archive timestamp (ISO 8601)
+          example: '2025-04-01T00:00:00.000Z'
+        pipelineId:
+          type: string
+          description: Pipeline UUID
+          example: 123e4567-e89b-12d3-a456-426614174000
+      required:
+      - id
+      - createdAt
+      - updatedAt
+      - name
+      - description
+      - archivedAt
+      - pipelineId
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: 'Enter Gentrace API key (Format: Authorization: Bearer <token>)'
+externalDocs:
+  url: https://github.com/gentrace/gentrace-openapi
+  description: Gentrace OpenAPI Github

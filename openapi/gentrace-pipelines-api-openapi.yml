@@ -1,0 +1,405 @@
+openapi: 3.1.0
+info:
+  title: Gentrace Datasets Pipelines API
+  version: 0.1.0
+  description: API documentation for Gentrace services.
+  contact:
+    name: Gentrace
+    url: https://gentrace.ai
+    email: support@gentrace.ai
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+servers:
+- url: https://gentrace.ai/api
+  description: API Endpoint
+security:
+- bearerAuth: []
+tags:
+- name: Pipelines
+paths:
+  /v4/pipelines:
+    get:
+      summary: List pipelines
+      description: List pipelines
+      operationId: listPipelines
+      tags:
+      - Pipelines
+      parameters:
+      - $ref: '#/components/parameters/SlugQueryParam'
+      - $ref: '#/components/parameters/FolderIdQueryParam'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Pipeline'
+                required:
+                - data
+        '400':
+          description: Client provided an invalid request for the pipeline. Please check the request format and parameters.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
+        '401':
+          description: No valid API key provided.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '404':
+          description: The pipeline resource does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '500':
+          description: Something went wrong on Gentrace's end.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+    post:
+      summary: Create a pipeline
+      description: Create a new pipeline
+      operationId: createPipeline
+      tags:
+      - Pipelines
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePipeline'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pipeline'
+        '400':
+          description: Client provided an invalid request for the pipeline. Please check the request format and parameters.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
+        '401':
+          description: No valid API key provided.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '404':
+          description: The pipeline resource does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '500':
+          description: Something went wrong on Gentrace's end.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+  /v4/pipelines/{id}:
+    get:
+      summary: Get a single pipeline
+      description: Retrieve the details of a pipeline by ID
+      operationId: getPipeline
+      tags:
+      - Pipelines
+      parameters:
+      - $ref: '#/components/parameters/PipelineIdPathParam'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pipeline'
+        '400':
+          description: Client provided an invalid request for the pipeline. Please check the request format and parameters.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
+        '401':
+          description: No valid API key provided.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '404':
+          description: The pipeline resource does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '500':
+          description: Something went wrong on Gentrace's end.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+    post:
+      summary: Update a pipeline
+      description: Update the details of a pipeline by ID
+      operationId: updatePipeline
+      tags:
+      - Pipelines
+      parameters:
+      - $ref: '#/components/parameters/PipelineIdPathParam'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdatePipeline'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pipeline'
+        '400':
+          description: Client provided an invalid request for the pipeline. Please check the request format and parameters.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestError'
+        '401':
+          description: No valid API key provided.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '404':
+          description: The pipeline resource does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '500':
+          description: Something went wrong on Gentrace's end.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+components:
+  parameters:
+    FolderIdQueryParam:
+      in: query
+      name: folderId
+      description: The ID of the folder to filter pipelines by
+      schema:
+        $ref: '#/components/schemas/FolderIdQuery'
+    PipelineIdPathParam:
+      in: path
+      name: id
+      description: Pipeline UUID
+      schema:
+        $ref: '#/components/schemas/PipelineIdParam'
+      required: true
+    SlugQueryParam:
+      in: query
+      name: slug
+      description: Filter pipelines by slug
+      schema:
+        $ref: '#/components/schemas/SlugQuery'
+  schemas:
+    UnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Authentication error details
+          example: Invalid or expired API key
+      required:
+      - message
+    PipelineIdParam:
+      type: string
+      format: uuid
+      description: Pipeline UUID
+      example: 123e4567-e89b-12d3-a456-426614174000
+    Pipeline:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Pipeline UUID
+          example: 123e4567-e89b-12d3-a456-426614174000
+        createdAt:
+          type: string
+          description: Creation timestamp (ISO 8601)
+          example: '2025-04-01T00:00:00.000Z'
+        updatedAt:
+          type: string
+          description: Last update timestamp (ISO 8601)
+          example: '2025-04-01T00:00:00.000Z'
+        slug:
+          type: string
+          pattern: ^[a-z0-9]+(-[a-z0-9]+)*$
+          minLength: 1
+          description: Pipeline slug
+          example: my-awesome-pipeline
+        displayName:
+          type:
+          - string
+          - 'null'
+          description: Pipeline display name
+          example: My Awesome Pipeline
+        folderId:
+          type:
+          - string
+          - 'null'
+          format: uuid
+          description: Folder UUID
+          example: 6527747a-ba86-441a-aebd-1ad94460bc89
+        archivedAt:
+          type:
+          - string
+          - 'null'
+          description: Archive timestamp (ISO 8601)
+          example: '2025-04-01T00:00:00.000Z'
+        goldenDatasetId:
+          type:
+          - string
+          - 'null'
+          format: uuid
+          description: Golden dataset UUID
+          example: 6527747a-ba86-441a-aebd-1ad94460bc89
+      required:
+      - id
+      - createdAt
+      - updatedAt
+      - slug
+      - displayName
+      - folderId
+      - archivedAt
+      - goldenDatasetId
+    UpdatePipeline:
+      type: object
+      properties:
+        displayName:
+          type:
+          - string
+          - 'null'
+          description: Pipeline display name
+          example: My Awesome Pipeline
+        folderId:
+          type:
+          - string
+          - 'null'
+          format: uuid
+          description: Folder UUID
+          example: 6527747a-ba86-441a-aebd-1ad94460bc89
+        isArchived:
+          type: boolean
+          description: Whether the pipeline is archived
+          example: false
+    BadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: A description of the validation error
+          example: 'Invalid parameters: ''name'' field is required'
+      required:
+      - message
+    FolderIdQuery:
+      type:
+      - string
+      - 'null'
+      format: uuid
+      description: The ID of the folder to filter pipelines by
+      example: 123e4567-e89b-12d3-a456-426614174000
+    CreatePipeline:
+      type: object
+      properties:
+        slug:
+          type: string
+          pattern: ^[a-z0-9]+(-[a-z0-9]+)*$
+          minLength: 1
+          description: Pipeline slug
+          example: my-awesome-pipeline
+        displayName:
+          type:
+          - string
+          - 'null'
+          description: Pipeline display name
+          example: My Awesome Pipeline
+        folderId:
+          type:
+          - string
+          - 'null'
+          format: uuid
+          description: Folder UUID
+          example: 6527747a-ba86-441a-aebd-1ad94460bc89
+          default: null
+      required:
+      - slug
+    NotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Resource not found details
+          example: Resource with ID '123e4567-e89b-12d3-a456-426614174000' not found
+      required:
+      - message
+    InternalServerError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Internal server error details
+          example: Internal server error occurred while processing the request
+      required:
+      - message
+    SlugQuery:
+      anyOf:
+      - type: string
+      - type: object
+        properties:
+          contains:
+            type: string
+          search:
+            type: string
+          startsWith:
+            type: string
+          endsWith:
+            type: string
+          in:
+            type: array
+            items:
+              type: string
+          notIn:
+            type: array
+            items:
+              type: string
+          mode:
+            type: string
+            enum:
+            - insensitive
+            - default
+        additionalProperties: false
+      description: Filter pipelines by slug
+      example: my-pipeline
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: 'Enter Gentrace API key (Format: Authorization: Bearer <token>)'
+externalDocs:
+  url: https://github.com/gentrace/gentrace-openapi
+  description: Gentrace OpenAPI Github
