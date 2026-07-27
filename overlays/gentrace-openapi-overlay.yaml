@@ -1,0 +1,27 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Gentrace API
+  version: 1.0.0
+extends: openapi/gentrace-openapi-original.json
+actions:
+- target: $.info
+  update:
+    x-apievangelist-provider: gentrace
+    x-apievangelist-categories:
+    - LLM Evaluation
+    - AI Testing
+    - Observability
+    x-apievangelist-auth: bearer
+    x-apievangelist-status: provider-shutdown
+- target: $.paths./v4/pipelines.get
+  update:
+    x-apievangelist-resource: pipeline
+- target: $.paths./v4/datasets.get
+  update:
+    x-apievangelist-resource: dataset
+- target: $.paths./v4/experiments.get
+  update:
+    x-apievangelist-resource: experiment
+- target: $.paths./v4/test-cases.get
+  update:
+    x-apievangelist-resource: test-case

@@ -1,8 +1,17 @@
 aid: gentrace
 name: Gentrace
-description: 'Gentrace is a company surfaced as a portfolio company of matrix-partners and added to the
-  API Evangelist network as a stub for enrichment. Sector: ai. This profile is a lead awaiting the enrichment
-  pipeline.'
+description: >-
+  Gentrace was a developer platform for evaluating and testing LLM and AI
+  applications ("evals as infrastructure"). It provided pipelines, datasets,
+  experiments, and test cases so teams could run offline and online
+  evaluations, grade model outputs, track regressions, and observe AI features
+  in production via OpenTelemetry-based instrumentation. The platform shipped a
+  REST API (v4) secured with bearer API keys, first-party Python and
+  TypeScript/Node SDKs, and a documented object model of pipelines, datasets,
+  experiments, and test cases. Gentrace was based in San Francisco and backed
+  by Matrix Partners. The company has since shut down its hosted product, but
+  its OpenAPI specification, SDK packages, and documentation mirror remain
+  publicly available.
 url: https://raw.githubusercontent.com/api-evangelist/gentrace/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
@@ -10,18 +19,133 @@ x-backed-by:
 - matrix-partners
 x-tier: stub
 x-tier-reason: portfolio-lead
+x-status: shutdown
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-19'
+image: https://mintcdn.com/gentrace/9dIPysEl4JbHm2X9/logo/dark.svg
 tags:
 - Company
 - Ai
-apis: []
+- LLM
+- Evaluation
+- Testing
+- Observability
+- Machine Learning
+- Developer Tools
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+apis:
+- aid: gentrace:gentrace-datasets-api
+  name: Gentrace Datasets API
+  description: The Datasets API from Gentrace — 2 operation(s) for datasets.
+  humanURL: https://gentrace.ai
+  baseURL: https://gentrace.ai/api
+  tags:
+  - Datasets
+  properties:
+  - type: OpenAPI
+    url: openapi/gentrace-datasets-api-openapi.yml
+  - type: Documentation
+    url: https://docs.gentrace.ai
+  - type: APIReference
+    url: https://docs.gentrace.ai/reference
+- aid: gentrace:gentrace-experiments-api
+  name: Gentrace Experiments API
+  description: The Experiments API from Gentrace — 2 operation(s) for experiments.
+  humanURL: https://gentrace.ai
+  baseURL: https://gentrace.ai/api
+  tags:
+  - Experiments
+  properties:
+  - type: OpenAPI
+    url: openapi/gentrace-experiments-api-openapi.yml
+  - type: Documentation
+    url: https://docs.gentrace.ai
+  - type: APIReference
+    url: https://docs.gentrace.ai/reference
+- aid: gentrace:gentrace-pipelines-api
+  name: Gentrace Pipelines API
+  description: The Pipelines API from Gentrace — 2 operation(s) for pipelines.
+  humanURL: https://gentrace.ai
+  baseURL: https://gentrace.ai/api
+  tags:
+  - Pipelines
+  properties:
+  - type: OpenAPI
+    url: openapi/gentrace-pipelines-api-openapi.yml
+  - type: Documentation
+    url: https://docs.gentrace.ai
+  - type: APIReference
+    url: https://docs.gentrace.ai/reference
+- aid: gentrace:gentrace-testcases-api
+  name: Gentrace TestCases API
+  description: The TestCases API from Gentrace — 2 operation(s) for testcases.
+  humanURL: https://gentrace.ai
+  baseURL: https://gentrace.ai/api
+  tags:
+  - TestCases
+  properties:
+  - type: OpenAPI
+    url: openapi/gentrace-testcases-api-openapi.yml
+  - type: Documentation
+    url: https://docs.gentrace.ai
+  - type: APIReference
+    url: https://docs.gentrace.ai/reference
 common:
+- type: DomainSecurity
+  url: security/gentrace-domain-security.yml
+- type: AgenticAccess
+  url: agentic-access/gentrace-agentic-access.yml
+- type: Authentication
+  url: authentication/gentrace-authentication.yml
 - type: Website
   url: https://gentrace.ai
+- type: Documentation
+  url: https://docs.gentrace.ai
+- type: APIReference
+  url: https://docs.gentrace.ai/reference
+- type: GitHubOrganization
+  url: https://github.com/gentrace
+- type: Packages
+  url: packages/gentrace-packages.yml
+- type: SDKs
+  url: packages/gentrace-packages.yml
+- type: ErrorCatalog
+  url: errors/gentrace-problem-types.yml
+- type: Conventions
+  url: conventions/gentrace-conventions.yml
+- type: DataModel
+  url: data-model/gentrace-data-model.yml
+- type: Overlay
+  url: overlays/gentrace-openapi-overlay.yaml
+- type: Conformance
+  url: conformance/gentrace-conformance.yml
+- type: MCPServer
+  url: mcp/gentrace-mcp.yml
+- type: LLMsTxt
+  url: llms/gentrace-llms.txt
+- type: Lifecycle
+  url: lifecycle/gentrace-lifecycle.yml
+- type: AgentSkill
+  url: skills/_index.yml
+x-enrichment:
+  date: '2026-07-19'
+  status: backfilled
+  pass: local-v1
+  note: backfilled from .gitignore signal + verified work evidence

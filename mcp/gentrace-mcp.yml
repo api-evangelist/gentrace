@@ -1,0 +1,60 @@
+generated: '2026-07-19'
+method: derived
+status: candidate
+source: openapi/gentrace-openapi-original.json
+note: >-
+  No official hosted/remote Gentrace MCP server was found (the hosted product
+  has shut down). This is a candidate tool list derived one-to-one from the
+  OpenAPI operations.
+server:
+  name: gentrace
+  transport: stdio
+tools:
+- name: list_pipelines
+  description: List pipelines
+  source_operation: openapi/gentrace-openapi-original.json#listPipelines
+- name: create_pipeline
+  description: Create a pipeline
+  source_operation: openapi/gentrace-openapi-original.json#createPipeline
+- name: get_pipeline
+  description: Get a single pipeline
+  source_operation: openapi/gentrace-openapi-original.json#getPipeline
+- name: update_pipeline
+  description: Update a pipeline
+  source_operation: openapi/gentrace-openapi-original.json#updatePipeline
+- name: list_datasets
+  description: List datasets
+  source_operation: openapi/gentrace-openapi-original.json#listDatasets
+- name: create_dataset
+  description: Create a dataset
+  source_operation: openapi/gentrace-openapi-original.json#createDataset
+- name: get_dataset
+  description: Get a single dataset
+  source_operation: openapi/gentrace-openapi-original.json#getDataset
+- name: update_dataset
+  description: Update a dataset
+  source_operation: openapi/gentrace-openapi-original.json#updateDataset
+- name: list_experiments
+  description: List experiments
+  source_operation: openapi/gentrace-openapi-original.json#listExperiments
+- name: create_experiment
+  description: Create an experiment
+  source_operation: openapi/gentrace-openapi-original.json#createExperiment
+- name: get_experiment
+  description: Get a single experiment
+  source_operation: openapi/gentrace-openapi-original.json#getExperiment
+- name: update_experiment
+  description: Update an experiment
+  source_operation: openapi/gentrace-openapi-original.json#updateExperiment
+- name: list_test_cases
+  description: List test cases
+  source_operation: openapi/gentrace-openapi-original.json#listTestCases
+- name: create_test_case
+  description: Create a test case
+  source_operation: openapi/gentrace-openapi-original.json#createTestCase
+- name: get_test_case
+  description: Get a single test case
+  source_operation: openapi/gentrace-openapi-original.json#getTestCase
+- name: delete_test_case
+  description: Delete a test case
+  source_operation: openapi/gentrace-openapi-original.json#deleteTestCase

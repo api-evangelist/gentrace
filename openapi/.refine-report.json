@@ -1,0 +1,20 @@
+{
+  "provider": "gentrace",
+  "sources": [
+    "gentrace-datasets-api-openapi.yml",
+    "gentrace-experiments-api-openapi.yml",
+    "gentrace-pipelines-api-openapi.yml",
+    "gentrace-testcases-api-openapi.yml"
+  ],
+  "outputs": [
+    "gentrace-datasets-api-openapi.yml",
+    "gentrace-experiments-api-openapi.yml",
+    "gentrace-pipelines-api-openapi.yml",
+    "gentrace-testcases-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

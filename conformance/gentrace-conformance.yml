@@ -1,0 +1,26 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/gentrace-openapi-original.json
+standards:
+- id: oauth2
+  conforms: false
+  evidence: securityScheme is http bearer (API key), not oauth2
+- id: openidconnect
+  conforms: false
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: errors use a plain application/json { message } envelope, not application/problem+json
+- id: bearer-token-auth
+  conforms: true
+  evidence: securityScheme type http, scheme bearer
+- id: openapi-3.1
+  conforms: true
+  evidence: spec declares openapi 3.1.0
+- id: json-api
+  conforms: false
+- id: cursor-pagination
+  conforms: false
+  evidence: no documented pagination scheme in the spec
+- id: uri-path-versioning
+  conforms: true
+  evidence: version embedded in path (/v4)

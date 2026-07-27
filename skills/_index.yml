@@ -1,0 +1,16 @@
+generated: '2026-07-19'
+method: generated
+source: openapi/gentrace-openapi-original.json
+skills:
+- file: gentrace-set-up-pipeline.md
+  name: Set up an evaluation pipeline
+  api: openapi/gentrace-openapi-original.json
+  operations: [createPipeline, listPipelines, getPipeline, updatePipeline]
+- file: gentrace-build-eval-dataset.md
+  name: Build an evaluation dataset with test cases
+  api: openapi/gentrace-openapi-original.json
+  operations: [createDataset, listDatasets, createTestCase, listTestCases, deleteTestCase]
+- file: gentrace-run-experiment.md
+  name: Run and track an evaluation experiment
+  api: openapi/gentrace-openapi-original.json
+  operations: [createExperiment, listExperiments, getExperiment, updateExperiment]

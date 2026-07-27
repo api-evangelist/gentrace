@@ -1,0 +1,50 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/gentrace-openapi-original.json
+entities:
+- name: Pipeline
+  id_field: id
+  fields: [id, createdAt, updatedAt, slug, displayName, folderId, archivedAt, goldenDatasetId]
+- name: Dataset
+  id_field: id
+  fields: [id, createdAt, updatedAt, name, description, archivedAt, pipelineId]
+- name: Experiment
+  id_field: id
+  fields: [id, createdAt, updatedAt, name, pipelineId, metadata]
+- name: TestCase
+  id_field: id
+  fields: [id, createdAt, updatedAt, inputs, expectedOutputs, datasetId, name, pipelineId, archivedAt, deletedAt]
+relationships:
+- from: Dataset
+  to: Pipeline
+  kind: belongs_to
+  via: pipelineId
+- from: Experiment
+  to: Pipeline
+  kind: belongs_to
+  via: pipelineId
+- from: TestCase
+  to: Dataset
+  kind: belongs_to
+  via: datasetId
+- from: TestCase
+  to: Pipeline
+  kind: belongs_to
+  via: pipelineId
+- from: Pipeline
+  to: Dataset
+  kind: has_many
+  via: pipelineId
+- from: Pipeline
+  to: Experiment
+  kind: has_many
+  via: pipelineId
+- from: Pipeline
+  to: Dataset
+  kind: has_one
+  via: goldenDatasetId
+  note: The pipeline's golden (reference) dataset.
+- from: Dataset
+  to: TestCase
+  kind: has_many
+  via: datasetId

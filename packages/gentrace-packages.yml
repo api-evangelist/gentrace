@@ -1,0 +1,31 @@
+generated: '2026-07-19'
+method: searched
+source: >-
+  Public package registries (PyPI, npm) and the gentrace GitHub organization
+packages:
+- language: python
+  registry: pypi
+  name: gentrace-py
+  url: https://pypi.org/project/gentrace-py/
+  install: pip install gentrace-py
+  repository: https://github.com/gentrace/gentrace-python
+  official: true
+  description: >-
+    Official Python library for the Gentrace API; instruments and evaluates AI
+    applications via OpenTelemetry.
+- language: typescript
+  registry: npm
+  name: gentrace
+  url: https://www.npmjs.com/package/gentrace
+  install: npm install gentrace
+  repository: https://github.com/gentrace/gentrace-node
+  official: true
+  description: Official TypeScript library for the Gentrace API.
+- language: javascript
+  registry: npm
+  name: "@gentrace/core"
+  url: https://www.npmjs.com/package/@gentrace/core
+  install: npm install @gentrace/core
+  repository: https://github.com/gentrace/gentrace-node
+  official: true
+  description: Core Gentrace Node.js library (legacy SDK generation).

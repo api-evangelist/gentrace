@@ -1,0 +1,21 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/gentrace-openapi-original.json
+versioning:
+  scheme: uri-path
+  current: v4
+  spec_info_version: 0.1.0
+deprecation:
+  policy_url: null
+  sunset_header: false
+  note: No deprecation/Sunset policy is documented.
+sla:
+  url: null
+status_page: null
+provider_status:
+  state: shutdown
+  note: >-
+    The hosted Gentrace product has shut down (gentrace.ai displays a shutdown
+    notice). The OpenAPI spec, SDK packages, and documentation mirror
+    (docs.gentrace.ai) remain available.
+deprecated_operations: []

@@ -1,0 +1,48 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/gentrace-openapi-original.json
+format: message-envelope
+envelope:
+  content_type: application/json
+  fields:
+  - message
+  note: >-
+    Gentrace error responses return a JSON object with a single `message`
+    string. This is not RFC 9457 (application/problem+json); it is a simple
+    message envelope.
+problems:
+- status: 400
+  schema: BadRequestError
+  title: Bad request
+  description: >-
+    Client provided an invalid request. Check the request format and
+    parameters (e.g. a required field is missing).
+- status: 401
+  schema: UnauthorizedError
+  title: Unauthorized
+  description: No valid API key provided. Supply a bearer API key.
+- status: 404
+  schema: NotFoundError
+  title: Not found
+  description: The requested resource does not exist.
+- status: 500
+  schema: InternalServerError
+  title: Internal server error
+  description: Something went wrong on Gentrace's end.
+applies_to_operations:
+- listPipelines
+- createPipeline
+- getPipeline
+- updatePipeline
+- listDatasets
+- createDataset
+- getDataset
+- updateDataset
+- listExperiments
+- createExperiment
+- getExperiment
+- updateExperiment
+- listTestCases
+- createTestCase
+- getTestCase
+- deleteTestCase

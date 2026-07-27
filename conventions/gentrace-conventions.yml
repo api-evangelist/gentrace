@@ -1,0 +1,44 @@
+generated: '2026-07-19'
+method: derived
+source: openapi/gentrace-openapi-original.json
+authentication:
+  style: bearer
+  scheme: http
+  header: 'Authorization: Bearer <api_key>'
+  note: See authentication/gentrace-authentication.yml
+versioning:
+  scheme: uri-path
+  current: v4
+  base_path: /v4
+  note: API version is embedded in the URL path (/v4/...).
+idempotency:
+  supported: false
+  note: >-
+    No idempotency-key header or parameter is documented in the OpenAPI. Create
+    operations (POST) are not declared idempotent.
+pagination:
+  documented: false
+  note: >-
+    List operations expose filter query parameters (e.g. slug, folderId,
+    pipelineId, datasetId, archived) rather than a documented cursor/offset
+    pagination scheme in the published spec.
+filtering:
+  style: query-parameters
+  examples:
+  - slug
+  - folderId
+  - pipelineId
+  - pipelineSlug
+  - datasetId
+  - archived
+error_envelope:
+  content_type: application/json
+  shape: '{ "message": string }'
+  note: See errors/gentrace-problem-types.yml
+rate_limiting:
+  documented: false
+cross_links:
+  errors: errors/gentrace-problem-types.yml
+  authentication: authentication/gentrace-authentication.yml
+  lifecycle: lifecycle/gentrace-lifecycle.yml
+  data_model: data-model/gentrace-data-model.yml
