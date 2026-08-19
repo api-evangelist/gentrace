@@ -1,0 +1,108 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Gentrace Datasets TestCases API",
+    "version": "0.1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "TestCases",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List test cases",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://gentrace.ai/api/v4/test-cases",
+            "params": [
+              {
+                "name": "datasetId",
+                "value": "",
+                "type": "query",
+                "description": "Dataset ID"
+              },
+              {
+                "name": "pipelineId",
+                "value": "",
+                "type": "query",
+                "description": "Filter to the datasets for a specific pipeline by UUID"
+              },
+              {
+                "name": "pipelineSlug",
+                "value": "",
+                "type": "query",
+                "description": "Pipeline slug"
+              }
+            ]
+          },
+          "docs": "List test cases"
+        },
+        {
+          "info": {
+            "name": "Create a test case",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://gentrace.ai/api/v4/test-cases",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new test case"
+        },
+        {
+          "info": {
+            "name": "Get a single test case",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://gentrace.ai/api/v4/test-cases/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Test Case UUID"
+              }
+            ]
+          },
+          "docs": "Retrieve the details of a test case by ID"
+        },
+        {
+          "info": {
+            "name": "Delete a test case",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://gentrace.ai/api/v4/test-cases/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Test Case UUID"
+              }
+            ]
+          },
+          "docs": "Delete a test case by ID"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

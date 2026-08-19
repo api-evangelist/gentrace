@@ -1,0 +1,100 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Gentrace Datasets Experiments API",
+    "version": "0.1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Experiments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List experiments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://gentrace.ai/api/v4/experiments",
+            "params": [
+              {
+                "name": "pipelineId",
+                "value": "",
+                "type": "query",
+                "description": "Filter to the datasets for a specific pipeline by UUID"
+              }
+            ]
+          },
+          "docs": "List experiments"
+        },
+        {
+          "info": {
+            "name": "Create a experiment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://gentrace.ai/api/v4/experiments",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new experiment"
+        },
+        {
+          "info": {
+            "name": "Get a single experiment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://gentrace.ai/api/v4/experiments/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Experiment UUID"
+              }
+            ]
+          },
+          "docs": "Retrieve the details of a experiment by ID"
+        },
+        {
+          "info": {
+            "name": "Update a experiment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://gentrace.ai/api/v4/experiments/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Experiment UUID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update the details of a experiment by ID"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

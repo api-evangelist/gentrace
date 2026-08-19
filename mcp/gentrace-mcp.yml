@@ -2,10 +2,8 @@ generated: '2026-07-19'
 method: derived
 status: candidate
 source: openapi/gentrace-openapi-original.json
-note: >-
-  No official hosted/remote Gentrace MCP server was found (the hosted product
-  has shut down). This is a candidate tool list derived one-to-one from the
-  OpenAPI operations.
+note: No official hosted/remote Gentrace MCP server was found (the hosted product has shut down). This
+  is a candidate tool list derived one-to-one from the OpenAPI operations.
 server:
   name: gentrace
   transport: stdio
@@ -58,3 +56,9 @@ tools:
 - name: delete_test_case
   description: Delete a test case
   source_operation: openapi/gentrace-openapi-original.json#deleteTestCase
+deployment:
+  mode: none
+  verified: derived
+  tools: 16
+  checked: '2026-08-12'
+  source: catalog MCP census

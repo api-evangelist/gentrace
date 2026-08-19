@@ -1,0 +1,106 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Gentrace Datasets Pipelines API",
+    "version": "0.1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Pipelines",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List pipelines",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://gentrace.ai/api/v4/pipelines",
+            "params": [
+              {
+                "name": "slug",
+                "value": "",
+                "type": "query",
+                "description": "Filter pipelines by slug"
+              },
+              {
+                "name": "folderId",
+                "value": "",
+                "type": "query",
+                "description": "The ID of the folder to filter pipelines by"
+              }
+            ]
+          },
+          "docs": "List pipelines"
+        },
+        {
+          "info": {
+            "name": "Create a pipeline",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://gentrace.ai/api/v4/pipelines",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new pipeline"
+        },
+        {
+          "info": {
+            "name": "Get a single pipeline",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://gentrace.ai/api/v4/pipelines/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Pipeline UUID"
+              }
+            ]
+          },
+          "docs": "Retrieve the details of a pipeline by ID"
+        },
+        {
+          "info": {
+            "name": "Update a pipeline",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://gentrace.ai/api/v4/pipelines/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Pipeline UUID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update the details of a pipeline by ID"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

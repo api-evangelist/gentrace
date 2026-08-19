@@ -1,0 +1,112 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Gentrace Datasets API",
+    "version": "0.1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Datasets",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List datasets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://gentrace.ai/api/v4/datasets",
+            "params": [
+              {
+                "name": "pipelineId",
+                "value": "",
+                "type": "query",
+                "description": "Filter to the datasets for a specific pipeline by UUID"
+              },
+              {
+                "name": "pipelineSlug",
+                "value": "",
+                "type": "query",
+                "description": "Pipeline slug"
+              },
+              {
+                "name": "archived",
+                "value": "",
+                "type": "query",
+                "description": "Flag to include archived datasets"
+              }
+            ]
+          },
+          "docs": "List datasets"
+        },
+        {
+          "info": {
+            "name": "Create a dataset",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://gentrace.ai/api/v4/datasets",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new dataset"
+        },
+        {
+          "info": {
+            "name": "Get a single dataset",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://gentrace.ai/api/v4/datasets/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Dataset UUID"
+              }
+            ]
+          },
+          "docs": "Retrieve the details of a dataset by ID"
+        },
+        {
+          "info": {
+            "name": "Update a dataset",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://gentrace.ai/api/v4/datasets/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Dataset UUID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update the details of a dataset by ID"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
