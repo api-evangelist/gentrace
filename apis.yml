@@ -38,6 +38,15 @@ modified: '2026-07-19'
 image: https://mintcdn.com/gentrace/9dIPysEl4JbHm2X9/logo/dark.svg
 tags:
 - Company
+- Artificial Intelligence
+- LLM
+- Evaluation
+- Testing
+- Observability
+- Machine-Learning
+- Developer Tools
+tags_raw:
+- Company
 - Ai
 - LLM
 - Evaluation
@@ -99,6 +108,8 @@ apis:
   humanURL: https://gentrace.ai
   baseURL: https://gentrace.ai/api
   tags:
+  - Test Cases
+  tags_raw:
   - TestCases
   properties:
   - type: OpenAPI
