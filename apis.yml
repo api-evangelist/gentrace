@@ -114,18 +114,16 @@ apis:
     url: https://docs.gentrace.ai
   - type: APIReference
     url: https://docs.gentrace.ai/reference
-- aid: gentrace:gentrace-testcases-api
-  name: Gentrace TestCases API
-  description: The TestCases API from Gentrace — 2 operation(s) for testcases.
+- aid: gentrace:gentrace-test-cases-api
+  name: Gentrace Test Cases API
+  description: The Test Cases API from Gentrace — 2 operation(s) for test cases.
   humanURL: https://gentrace.ai
   baseURL: https://gentrace.ai/api
   tags:
   - Test Cases
-  tags_raw:
-  - TestCases
   properties:
   - type: OpenAPI
-    url: openapi/gentrace-testcases-api-openapi.yml
+    url: openapi/gentrace-test-cases-api-openapi.yml
   - type: Documentation
     url: https://docs.gentrace.ai
   - type: APIReference
