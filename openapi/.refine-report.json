@@ -1,10 +1,7 @@
 {
   "provider": "gentrace",
   "sources": [
-    "gentrace-datasets-api-openapi.yml",
-    "gentrace-experiments-api-openapi.yml",
-    "gentrace-pipelines-api-openapi.yml",
-    "gentrace-testcases-api-openapi.yml"
+    "_original/gentrace-openapi-original.json"
   ],
   "outputs": [
     "gentrace-datasets-api-openapi.yml",
@@ -12,9 +9,25 @@
     "gentrace-pipelines-api-openapi.yml",
     "gentrace-testcases-api-openapi.yml"
   ],
-  "archived": [],
+  "archived": [
+    "deleted 1 superseded output(s) from the previous generation"
+  ],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "gentrace-openapi-original.json: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "gentrace-openapi-original.json: declared missing tag: Datasets",
+    "gentrace-openapi-original.json: declared missing tag: Experiments",
+    "gentrace-openapi-original.json: declared missing tag: Pipelines",
+    "gentrace-openapi-original.json: declared missing tag: TestCases",
+    "superseded outputs removed: gentrace-test-cases-api-openapi.yml",
+    "apis.yml register: written (+1 apis, 4 total)"
+  ],
+  "skipped": [
+    "gentrace-datasets-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "gentrace-experiments-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "gentrace-pipelines-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "gentrace-test-cases-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

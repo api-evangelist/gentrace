@@ -1,4 +1,4 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
   title: Gentrace Datasets API
   version: 0.1.0
@@ -21,7 +21,6 @@ paths:
   /v4/datasets:
     get:
       summary: List datasets
-      description: List datasets
       operationId: listDatasets
       tags:
       - Datasets
@@ -196,56 +195,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/InternalServerError'
 components:
-  parameters:
-    PipelineSlugQueryParam:
-      in: query
-      name: pipelineSlug
-      description: Pipeline slug
-      schema:
-        $ref: '#/components/schemas/PipelineSlugQuery'
-    DatasetIdPathParam:
-      in: path
-      name: id
-      description: Dataset UUID
-      schema:
-        $ref: '#/components/schemas/DatasetIdParam'
-      required: true
-    ArchivedQueryParam:
-      in: query
-      name: archived
-      description: Flag to include archived datasets
-      schema:
-        $ref: '#/components/schemas/ArchivedQuery'
-    PipelineIdQueryParam:
-      in: query
-      name: pipelineId
-      description: Filter to the datasets for a specific pipeline by UUID
-      schema:
-        $ref: '#/components/schemas/PipelineIdQuery'
   schemas:
-    UnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-          description: Authentication error details
-          example: Invalid or expired API key
-      required:
-      - message
-    PipelineSlugQuery:
-      type: string
-      minLength: 1
-      description: Pipeline slug
-      example: email-summarizer
-    ArchivedQuery:
-      type: boolean
-      description: Flag to include archived datasets
-      example: false
-    PipelineIdQuery:
-      type: string
-      format: uuid
-      description: Filter to the datasets for a specific pipeline by UUID
-      example: 123e4567-e89b-12d3-a456-426614174000
     CreateDataset:
       type: object
       properties:
@@ -275,59 +225,6 @@ components:
       required:
       - name
       - description
-    BadRequestError:
-      type: object
-      properties:
-        message:
-          type: string
-          description: A description of the validation error
-          example: 'Invalid parameters: ''name'' field is required'
-      required:
-      - message
-    UpdateDataset:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Dataset name
-          example: Dataset - negative user feedback - 2025-04-01
-        description:
-          type:
-          - string
-          - 'null'
-          description: Dataset description
-          example: Negative user feedback collected from our production environment
-        isGolden:
-          type: boolean
-          description: Set the dataset as the golden dataset
-          example: true
-        isArchived:
-          type: boolean
-          description: Archive the dataset
-          example: true
-    DatasetIdParam:
-      type: string
-      format: uuid
-      description: Dataset UUID
-      example: 123e4567-e89b-12d3-a456-426614174000
-    NotFoundError:
-      type: object
-      properties:
-        message:
-          type: string
-          description: Resource not found details
-          example: Resource with ID '123e4567-e89b-12d3-a456-426614174000' not found
-      required:
-      - message
-    InternalServerError:
-      type: object
-      properties:
-        message:
-          type: string
-          description: Internal server error details
-          example: Internal server error occurred while processing the request
-      required:
-      - message
     Dataset:
       type: object
       properties:
@@ -372,6 +269,108 @@ components:
       - description
       - archivedAt
       - pipelineId
+    ArchivedQuery:
+      type: boolean
+      description: Flag to include archived datasets
+      example: false
+    BadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: A description of the validation error
+          example: 'Invalid parameters: ''name'' field is required'
+      required:
+      - message
+    PipelineSlugQuery:
+      type: string
+      minLength: 1
+      description: Pipeline slug
+      example: email-summarizer
+    InternalServerError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Internal server error details
+          example: Internal server error occurred while processing the request
+      required:
+      - message
+    UnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Authentication error details
+          example: Invalid or expired API key
+      required:
+      - message
+    UpdateDataset:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Dataset name
+          example: Dataset - negative user feedback - 2025-04-01
+        description:
+          type:
+          - string
+          - 'null'
+          description: Dataset description
+          example: Negative user feedback collected from our production environment
+        isGolden:
+          type: boolean
+          description: Set the dataset as the golden dataset
+          example: true
+        isArchived:
+          type: boolean
+          description: Archive the dataset
+          example: true
+    DatasetIdParam:
+      type: string
+      format: uuid
+      description: Dataset UUID
+      example: 123e4567-e89b-12d3-a456-426614174000
+    NotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Resource not found details
+          example: Resource with ID '123e4567-e89b-12d3-a456-426614174000' not found
+      required:
+      - message
+    PipelineIdQuery:
+      type: string
+      format: uuid
+      description: Filter to the datasets for a specific pipeline by UUID
+      example: 123e4567-e89b-12d3-a456-426614174000
+  parameters:
+    ArchivedQueryParam:
+      in: query
+      name: archived
+      description: Flag to include archived datasets
+      schema:
+        $ref: '#/components/schemas/ArchivedQuery'
+    PipelineSlugQueryParam:
+      in: query
+      name: pipelineSlug
+      description: Pipeline slug
+      schema:
+        $ref: '#/components/schemas/PipelineSlugQuery'
+    PipelineIdQueryParam:
+      in: query
+      name: pipelineId
+      description: Filter to the datasets for a specific pipeline by UUID
+      schema:
+        $ref: '#/components/schemas/PipelineIdQuery'
+    DatasetIdPathParam:
+      in: path
+      name: id
+      description: Dataset UUID
+      schema:
+        $ref: '#/components/schemas/DatasetIdParam'
+      required: true
   securitySchemes:
     bearerAuth:
       type: http

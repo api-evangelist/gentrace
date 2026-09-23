@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Gentrace Datasets Pipelines API
+  title: Gentrace Pipelines API
   version: 0.1.0
   description: API documentation for Gentrace services.
   contact:
@@ -21,7 +21,6 @@ paths:
   /v4/pipelines:
     get:
       summary: List pipelines
-      description: List pipelines
       operationId: listPipelines
       tags:
       - Pipelines
@@ -195,41 +194,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/InternalServerError'
 components:
-  parameters:
-    FolderIdQueryParam:
-      in: query
-      name: folderId
-      description: The ID of the folder to filter pipelines by
-      schema:
-        $ref: '#/components/schemas/FolderIdQuery'
-    PipelineIdPathParam:
-      in: path
-      name: id
-      description: Pipeline UUID
-      schema:
-        $ref: '#/components/schemas/PipelineIdParam'
-      required: true
-    SlugQueryParam:
-      in: query
-      name: slug
-      description: Filter pipelines by slug
-      schema:
-        $ref: '#/components/schemas/SlugQuery'
   schemas:
-    UnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-          description: Authentication error details
-          example: Invalid or expired API key
-      required:
-      - message
-    PipelineIdParam:
-      type: string
-      format: uuid
-      description: Pipeline UUID
-      example: 123e4567-e89b-12d3-a456-426614174000
     Pipeline:
       type: object
       properties:
@@ -287,26 +252,6 @@ components:
       - folderId
       - archivedAt
       - goldenDatasetId
-    UpdatePipeline:
-      type: object
-      properties:
-        displayName:
-          type:
-          - string
-          - 'null'
-          description: Pipeline display name
-          example: My Awesome Pipeline
-        folderId:
-          type:
-          - string
-          - 'null'
-          format: uuid
-          description: Folder UUID
-          example: 6527747a-ba86-441a-aebd-1ad94460bc89
-        isArchived:
-          type: boolean
-          description: Whether the pipeline is archived
-          example: false
     BadRequestError:
       type: object
       properties:
@@ -314,56 +259,6 @@ components:
           type: string
           description: A description of the validation error
           example: 'Invalid parameters: ''name'' field is required'
-      required:
-      - message
-    FolderIdQuery:
-      type:
-      - string
-      - 'null'
-      format: uuid
-      description: The ID of the folder to filter pipelines by
-      example: 123e4567-e89b-12d3-a456-426614174000
-    CreatePipeline:
-      type: object
-      properties:
-        slug:
-          type: string
-          pattern: ^[a-z0-9]+(-[a-z0-9]+)*$
-          minLength: 1
-          description: Pipeline slug
-          example: my-awesome-pipeline
-        displayName:
-          type:
-          - string
-          - 'null'
-          description: Pipeline display name
-          example: My Awesome Pipeline
-        folderId:
-          type:
-          - string
-          - 'null'
-          format: uuid
-          description: Folder UUID
-          example: 6527747a-ba86-441a-aebd-1ad94460bc89
-          default: null
-      required:
-      - slug
-    NotFoundError:
-      type: object
-      properties:
-        message:
-          type: string
-          description: Resource not found details
-          example: Resource with ID '123e4567-e89b-12d3-a456-426614174000' not found
-      required:
-      - message
-    InternalServerError:
-      type: object
-      properties:
-        message:
-          type: string
-          description: Internal server error details
-          example: Internal server error occurred while processing the request
       required:
       - message
     SlugQuery:
@@ -395,6 +290,110 @@ components:
         additionalProperties: false
       description: Filter pipelines by slug
       example: my-pipeline
+    InternalServerError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Internal server error details
+          example: Internal server error occurred while processing the request
+      required:
+      - message
+    UnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Authentication error details
+          example: Invalid or expired API key
+      required:
+      - message
+    CreatePipeline:
+      type: object
+      properties:
+        slug:
+          type: string
+          pattern: ^[a-z0-9]+(-[a-z0-9]+)*$
+          minLength: 1
+          description: Pipeline slug
+          example: my-awesome-pipeline
+        displayName:
+          type:
+          - string
+          - 'null'
+          description: Pipeline display name
+          example: My Awesome Pipeline
+        folderId:
+          type:
+          - string
+          - 'null'
+          format: uuid
+          description: Folder UUID
+          example: 6527747a-ba86-441a-aebd-1ad94460bc89
+          default: null
+      required:
+      - slug
+    PipelineIdParam:
+      type: string
+      format: uuid
+      description: Pipeline UUID
+      example: 123e4567-e89b-12d3-a456-426614174000
+    NotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Resource not found details
+          example: Resource with ID '123e4567-e89b-12d3-a456-426614174000' not found
+      required:
+      - message
+    FolderIdQuery:
+      type:
+      - string
+      - 'null'
+      format: uuid
+      description: The ID of the folder to filter pipelines by
+      example: 123e4567-e89b-12d3-a456-426614174000
+    UpdatePipeline:
+      type: object
+      properties:
+        displayName:
+          type:
+          - string
+          - 'null'
+          description: Pipeline display name
+          example: My Awesome Pipeline
+        folderId:
+          type:
+          - string
+          - 'null'
+          format: uuid
+          description: Folder UUID
+          example: 6527747a-ba86-441a-aebd-1ad94460bc89
+        isArchived:
+          type: boolean
+          description: Whether the pipeline is archived
+          example: false
+  parameters:
+    SlugQueryParam:
+      in: query
+      name: slug
+      description: Filter pipelines by slug
+      schema:
+        $ref: '#/components/schemas/SlugQuery'
+    FolderIdQueryParam:
+      in: query
+      name: folderId
+      description: The ID of the folder to filter pipelines by
+      schema:
+        $ref: '#/components/schemas/FolderIdQuery'
+    PipelineIdPathParam:
+      in: path
+      name: id
+      description: Pipeline UUID
+      schema:
+        $ref: '#/components/schemas/PipelineIdParam'
+      required: true
   securitySchemes:
     bearerAuth:
       type: http
