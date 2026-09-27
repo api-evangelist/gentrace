@@ -196,35 +196,11 @@ paths:
                 $ref: '#/components/schemas/InternalServerError'
 components:
   schemas:
-    CreateDataset:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Dataset name
-          example: Dataset - negative user feedback - 2025-04-01
-        description:
-          type:
-          - string
-          - 'null'
-          description: Dataset description
-          example: Negative user feedback collected from our production environment
-        isGolden:
-          type: boolean
-          description: Whether the dataset is golden
-          example: false
-        pipelineSlug:
-          type: string
-          description: Pipeline slug (mutually exclusive with pipelineId)
-          example: email-summarizer
-        pipelineId:
-          type: string
-          format: uuid
-          description: Pipeline ID (mutually exclusive with pipelineSlug)
-          example: 123e4567-e89b-12d3-a456-426614174000
-      required:
-      - name
-      - description
+    PipelineIdQuery:
+      type: string
+      format: uuid
+      description: Filter to the datasets for a specific pipeline by UUID
+      example: 123e4567-e89b-12d3-a456-426614174000
     Dataset:
       type: object
       properties:
@@ -269,42 +245,49 @@ components:
       - description
       - archivedAt
       - pipelineId
+    CreateDataset:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Dataset name
+          example: Dataset - negative user feedback - 2025-04-01
+        description:
+          type:
+          - string
+          - 'null'
+          description: Dataset description
+          example: Negative user feedback collected from our production environment
+        isGolden:
+          type: boolean
+          description: Whether the dataset is golden
+          example: false
+        pipelineSlug:
+          type: string
+          description: Pipeline slug (mutually exclusive with pipelineId)
+          example: email-summarizer
+        pipelineId:
+          type: string
+          format: uuid
+          description: Pipeline ID (mutually exclusive with pipelineSlug)
+          example: 123e4567-e89b-12d3-a456-426614174000
+      required:
+      - name
+      - description
     ArchivedQuery:
       type: boolean
       description: Flag to include archived datasets
       example: false
-    BadRequestError:
-      type: object
-      properties:
-        message:
-          type: string
-          description: A description of the validation error
-          example: 'Invalid parameters: ''name'' field is required'
-      required:
-      - message
     PipelineSlugQuery:
       type: string
       minLength: 1
       description: Pipeline slug
       example: email-summarizer
-    InternalServerError:
-      type: object
-      properties:
-        message:
-          type: string
-          description: Internal server error details
-          example: Internal server error occurred while processing the request
-      required:
-      - message
-    UnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-          description: Authentication error details
-          example: Invalid or expired API key
-      required:
-      - message
+    DatasetIdParam:
+      type: string
+      format: uuid
+      description: Dataset UUID
+      example: 123e4567-e89b-12d3-a456-426614174000
     UpdateDataset:
       type: object
       properties:
@@ -326,11 +309,15 @@ components:
           type: boolean
           description: Archive the dataset
           example: true
-    DatasetIdParam:
-      type: string
-      format: uuid
-      description: Dataset UUID
-      example: 123e4567-e89b-12d3-a456-426614174000
+    InternalServerError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Internal server error details
+          example: Internal server error occurred while processing the request
+      required:
+      - message
     NotFoundError:
       type: object
       properties:
@@ -340,11 +327,24 @@ components:
           example: Resource with ID '123e4567-e89b-12d3-a456-426614174000' not found
       required:
       - message
-    PipelineIdQuery:
-      type: string
-      format: uuid
-      description: Filter to the datasets for a specific pipeline by UUID
-      example: 123e4567-e89b-12d3-a456-426614174000
+    BadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: A description of the validation error
+          example: 'Invalid parameters: ''name'' field is required'
+      required:
+      - message
+    UnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Authentication error details
+          example: Invalid or expired API key
+      required:
+      - message
   parameters:
     ArchivedQueryParam:
       in: query
@@ -358,12 +358,6 @@ components:
       description: Pipeline slug
       schema:
         $ref: '#/components/schemas/PipelineSlugQuery'
-    PipelineIdQueryParam:
-      in: query
-      name: pipelineId
-      description: Filter to the datasets for a specific pipeline by UUID
-      schema:
-        $ref: '#/components/schemas/PipelineIdQuery'
     DatasetIdPathParam:
       in: path
       name: id
@@ -371,6 +365,12 @@ components:
       schema:
         $ref: '#/components/schemas/DatasetIdParam'
       required: true
+    PipelineIdQueryParam:
+      in: query
+      name: pipelineId
+      description: Filter to the datasets for a specific pipeline by UUID
+      schema:
+        $ref: '#/components/schemas/PipelineIdQuery'
   securitySchemes:
     bearerAuth:
       type: http

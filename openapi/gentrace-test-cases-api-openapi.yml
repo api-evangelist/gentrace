@@ -186,10 +186,73 @@ paths:
                 $ref: '#/components/schemas/InternalServerError'
 components:
   schemas:
+    PipelineIdQuery:
+      type: string
+      format: uuid
+      description: Filter to the datasets for a specific pipeline by UUID
+      example: 123e4567-e89b-12d3-a456-426614174000
+    CreateTestCase:
+      type: object
+      properties:
+        datasetId:
+          type: string
+          format: uuid
+          description: Dataset UUID
+          example: b2c3d4e5-f6a7-8901-2345-67890abcdef1
+        name:
+          type: string
+          minLength: 1
+          description: Test case name
+          example: Prompting with a SQL query that does not return any results
+        inputs:
+          type: object
+          additionalProperties: true
+          description: Test case inputs as a JSON object
+          example:
+            query: What is the capital of France?
+        expectedOutputs:
+          type: object
+          additionalProperties: true
+          default: {}
+          description: Optional expected outputs as a JSON object
+          example:
+            result: No results found
+      required:
+      - datasetId
+      - name
+      - inputs
+      additionalProperties: false
+      description: Test case creation parameters
+      example:
+        datasetId: b2c3d4e5-f6a7-8901-2345-67890abcdef1
+        name: Prompting with a SQL query that does not return any results
+        inputs:
+          query: What is the capital of France?
+        expectedOutputs:
+          result: No results found
     TestCaseIdParam:
       type: string
       format: uuid
       description: Test Case UUID
+      example: 123e4567-e89b-12d3-a456-426614174000
+    PipelineSlugQuery:
+      type: string
+      minLength: 1
+      description: Pipeline slug
+      example: email-summarizer
+    InternalServerError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Internal server error details
+          example: Internal server error occurred while processing the request
+      required:
+      - message
+    DatasetIdQuery:
+      type: string
+      format: uuid
+      description: Dataset ID
       example: 123e4567-e89b-12d3-a456-426614174000
     TestCase:
       type: object
@@ -257,82 +320,6 @@ components:
       - pipelineId
       - archivedAt
       - deletedAt
-    BadRequestError:
-      type: object
-      properties:
-        message:
-          type: string
-          description: A description of the validation error
-          example: 'Invalid parameters: ''name'' field is required'
-      required:
-      - message
-    PipelineSlugQuery:
-      type: string
-      minLength: 1
-      description: Pipeline slug
-      example: email-summarizer
-    InternalServerError:
-      type: object
-      properties:
-        message:
-          type: string
-          description: Internal server error details
-          example: Internal server error occurred while processing the request
-      required:
-      - message
-    DatasetIdQuery:
-      type: string
-      format: uuid
-      description: Dataset ID
-      example: 123e4567-e89b-12d3-a456-426614174000
-    CreateTestCase:
-      type: object
-      properties:
-        datasetId:
-          type: string
-          format: uuid
-          description: Dataset UUID
-          example: b2c3d4e5-f6a7-8901-2345-67890abcdef1
-        name:
-          type: string
-          minLength: 1
-          description: Test case name
-          example: Prompting with a SQL query that does not return any results
-        inputs:
-          type: object
-          additionalProperties: true
-          description: Test case inputs as a JSON object
-          example:
-            query: What is the capital of France?
-        expectedOutputs:
-          type: object
-          additionalProperties: true
-          default: {}
-          description: Optional expected outputs as a JSON object
-          example:
-            result: No results found
-      required:
-      - datasetId
-      - name
-      - inputs
-      additionalProperties: false
-      description: Test case creation parameters
-      example:
-        datasetId: b2c3d4e5-f6a7-8901-2345-67890abcdef1
-        name: Prompting with a SQL query that does not return any results
-        inputs:
-          query: What is the capital of France?
-        expectedOutputs:
-          result: No results found
-    UnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-          description: Authentication error details
-          example: Invalid or expired API key
-      required:
-      - message
     NotFoundError:
       type: object
       properties:
@@ -342,11 +329,24 @@ components:
           example: Resource with ID '123e4567-e89b-12d3-a456-426614174000' not found
       required:
       - message
-    PipelineIdQuery:
-      type: string
-      format: uuid
-      description: Filter to the datasets for a specific pipeline by UUID
-      example: 123e4567-e89b-12d3-a456-426614174000
+    BadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: A description of the validation error
+          example: 'Invalid parameters: ''name'' field is required'
+      required:
+      - message
+    UnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Authentication error details
+          example: Invalid or expired API key
+      required:
+      - message
   parameters:
     TestCaseIdPathParam:
       in: path

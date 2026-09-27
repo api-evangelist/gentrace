@@ -208,64 +208,11 @@ components:
       schema:
         $ref: '#/components/schemas/PipelineIdQuery'
   schemas:
-    BadRequestError:
-      type: object
-      properties:
-        message:
-          type: string
-          description: A description of the validation error
-          example: 'Invalid parameters: ''name'' field is required'
-      required:
-      - message
-    InternalServerError:
-      type: object
-      properties:
-        message:
-          type: string
-          description: Internal server error details
-          example: Internal server error occurred while processing the request
-      required:
-      - message
-    CreateExperiment:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Friendly experiment name
-          example: OpenAI o3-mini prompt
-        pipelineId:
-          type: string
-          format: uuid
-          description: The ID of the pipeline to create the experiment for
-          example: 123e4567-e89b-12d3-a456-426614174000
-        metadata:
-          type: object
-          additionalProperties: true
-          description: Optional metadata for the experiment
-          example:
-            promptTemplate:
-              type: string
-              value: Hello, {{ name }}!
-      required:
-      - pipelineId
-      additionalProperties: false
-      description: Creates a new experiment with the given pipeline ID
-      examples:
-      - pipelineId: 123e4567-e89b-12d3-a456-426614174000
-        name: OpenAI o3-mini prompt
-        metadata:
-          promptTemplate:
-            type: string
-            value: Hello, {{ name }}!
-    UnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-          description: Authentication error details
-          example: Invalid or expired API key
-      required:
-      - message
+    PipelineIdQuery:
+      type: string
+      format: uuid
+      description: Filter to the datasets for a specific pipeline by UUID
+      example: 123e4567-e89b-12d3-a456-426614174000
     Experiment:
       type: object
       properties:
@@ -307,20 +254,6 @@ components:
       - name
       - pipelineId
       - metadata
-    ExperimentIdParam:
-      type: string
-      format: uuid
-      description: Experiment UUID
-      example: 123e4567-e89b-12d3-a456-426614174000
-    NotFoundError:
-      type: object
-      properties:
-        message:
-          type: string
-          description: Resource not found details
-          example: Resource with ID '123e4567-e89b-12d3-a456-426614174000' not found
-      required:
-      - message
     UpdateExperiment:
       type: object
       properties:
@@ -345,11 +278,78 @@ components:
           - EVALUATING
           description: Status
           example: GENERATING
-    PipelineIdQuery:
+    InternalServerError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Internal server error details
+          example: Internal server error occurred while processing the request
+      required:
+      - message
+    CreateExperiment:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Friendly experiment name
+          example: OpenAI o3-mini prompt
+        pipelineId:
+          type: string
+          format: uuid
+          description: The ID of the pipeline to create the experiment for
+          example: 123e4567-e89b-12d3-a456-426614174000
+        metadata:
+          type: object
+          additionalProperties: true
+          description: Optional metadata for the experiment
+          example:
+            promptTemplate:
+              type: string
+              value: Hello, {{ name }}!
+      required:
+      - pipelineId
+      additionalProperties: false
+      description: Creates a new experiment with the given pipeline ID
+      examples:
+      - pipelineId: 123e4567-e89b-12d3-a456-426614174000
+        name: OpenAI o3-mini prompt
+        metadata:
+          promptTemplate:
+            type: string
+            value: Hello, {{ name }}!
+    ExperimentIdParam:
       type: string
       format: uuid
-      description: Filter to the datasets for a specific pipeline by UUID
+      description: Experiment UUID
       example: 123e4567-e89b-12d3-a456-426614174000
+    NotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Resource not found details
+          example: Resource with ID '123e4567-e89b-12d3-a456-426614174000' not found
+      required:
+      - message
+    BadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: A description of the validation error
+          example: 'Invalid parameters: ''name'' field is required'
+      required:
+      - message
+    UnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Authentication error details
+          example: Invalid or expired API key
+      required:
+      - message
   securitySchemes:
     bearerAuth:
       type: http

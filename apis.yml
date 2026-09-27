@@ -19,7 +19,7 @@ x-backed-by:
 - matrix-partners
 x-tier: stub
 x-tier-reason: portfolio-lead
-x-status: shutdown
+x-status: defunct
 deliveryModel:
   model: unknown
   open_source: false
@@ -55,8 +55,9 @@ tags:
 - Evaluation
 - Testing
 - Observability
-- Machine-Learning
+- Machine Learning
 - Developer Tools
+- Defunct
 tags_raw:
 - Company
 - Ai
@@ -66,6 +67,8 @@ tags_raw:
 - Observability
 - Machine Learning
 - Developer Tools
+- Defunct
+- Machine-Learning
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
