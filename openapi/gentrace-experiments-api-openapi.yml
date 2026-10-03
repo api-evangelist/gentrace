@@ -193,26 +193,26 @@ paths:
               schema:
                 $ref: '#/components/schemas/InternalServerError'
 components:
-  parameters:
-    ExperimentIdPathParam:
-      in: path
-      name: id
-      description: Experiment UUID
-      schema:
-        $ref: '#/components/schemas/ExperimentIdParam'
-      required: true
-    PipelineIdQueryParam:
-      in: query
-      name: pipelineId
-      description: Filter to the datasets for a specific pipeline by UUID
-      schema:
-        $ref: '#/components/schemas/PipelineIdQuery'
   schemas:
+    ExperimentIdParam:
+      type: string
+      format: uuid
+      description: Experiment UUID
+      example: 123e4567-e89b-12d3-a456-426614174000
     PipelineIdQuery:
       type: string
       format: uuid
       description: Filter to the datasets for a specific pipeline by UUID
       example: 123e4567-e89b-12d3-a456-426614174000
+    NotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Resource not found details
+          example: Resource with ID '123e4567-e89b-12d3-a456-426614174000' not found
+      required:
+      - message
     Experiment:
       type: object
       properties:
@@ -254,37 +254,22 @@ components:
       - name
       - pipelineId
       - metadata
-    UpdateExperiment:
-      type: object
-      properties:
-        name:
-          type:
-          - string
-          - 'null'
-          description: Friendly experiment name
-          example: OpenAI o3-mini prompt
-        metadata:
-          type:
-          - object
-          - 'null'
-          additionalProperties: true
-          description: Metadata
-          example:
-            key: value
-        status:
-          type: string
-          enum:
-          - GENERATING
-          - EVALUATING
-          description: Status
-          example: GENERATING
-    InternalServerError:
+    BadRequestError:
       type: object
       properties:
         message:
           type: string
-          description: Internal server error details
-          example: Internal server error occurred while processing the request
+          description: A description of the validation error
+          example: 'Invalid parameters: ''name'' field is required'
+      required:
+      - message
+    UnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Authentication error details
+          example: Invalid or expired API key
       required:
       - message
     CreateExperiment:
@@ -318,38 +303,53 @@ components:
           promptTemplate:
             type: string
             value: Hello, {{ name }}!
-    ExperimentIdParam:
-      type: string
-      format: uuid
+    InternalServerError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Internal server error details
+          example: Internal server error occurred while processing the request
+      required:
+      - message
+    UpdateExperiment:
+      type: object
+      properties:
+        name:
+          type:
+          - string
+          - 'null'
+          description: Friendly experiment name
+          example: OpenAI o3-mini prompt
+        metadata:
+          type:
+          - object
+          - 'null'
+          additionalProperties: true
+          description: Metadata
+          example:
+            key: value
+        status:
+          type: string
+          enum:
+          - GENERATING
+          - EVALUATING
+          description: Status
+          example: GENERATING
+  parameters:
+    PipelineIdQueryParam:
+      in: query
+      name: pipelineId
+      description: Filter to the datasets for a specific pipeline by UUID
+      schema:
+        $ref: '#/components/schemas/PipelineIdQuery'
+    ExperimentIdPathParam:
+      in: path
+      name: id
       description: Experiment UUID
-      example: 123e4567-e89b-12d3-a456-426614174000
-    NotFoundError:
-      type: object
-      properties:
-        message:
-          type: string
-          description: Resource not found details
-          example: Resource with ID '123e4567-e89b-12d3-a456-426614174000' not found
-      required:
-      - message
-    BadRequestError:
-      type: object
-      properties:
-        message:
-          type: string
-          description: A description of the validation error
-          example: 'Invalid parameters: ''name'' field is required'
-      required:
-      - message
-    UnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-          description: Authentication error details
-          example: Invalid or expired API key
-      required:
-      - message
+      schema:
+        $ref: '#/components/schemas/ExperimentIdParam'
+      required: true
   securitySchemes:
     bearerAuth:
       type: http

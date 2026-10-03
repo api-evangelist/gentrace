@@ -186,11 +186,6 @@ paths:
                 $ref: '#/components/schemas/InternalServerError'
 components:
   schemas:
-    PipelineIdQuery:
-      type: string
-      format: uuid
-      description: Filter to the datasets for a specific pipeline by UUID
-      example: 123e4567-e89b-12d3-a456-426614174000
     CreateTestCase:
       type: object
       properties:
@@ -230,30 +225,6 @@ components:
           query: What is the capital of France?
         expectedOutputs:
           result: No results found
-    TestCaseIdParam:
-      type: string
-      format: uuid
-      description: Test Case UUID
-      example: 123e4567-e89b-12d3-a456-426614174000
-    PipelineSlugQuery:
-      type: string
-      minLength: 1
-      description: Pipeline slug
-      example: email-summarizer
-    InternalServerError:
-      type: object
-      properties:
-        message:
-          type: string
-          description: Internal server error details
-          example: Internal server error occurred while processing the request
-      required:
-      - message
-    DatasetIdQuery:
-      type: string
-      format: uuid
-      description: Dataset ID
-      example: 123e4567-e89b-12d3-a456-426614174000
     TestCase:
       type: object
       properties:
@@ -320,6 +291,16 @@ components:
       - pipelineId
       - archivedAt
       - deletedAt
+    TestCaseIdParam:
+      type: string
+      format: uuid
+      description: Test Case UUID
+      example: 123e4567-e89b-12d3-a456-426614174000
+    PipelineIdQuery:
+      type: string
+      format: uuid
+      description: Filter to the datasets for a specific pipeline by UUID
+      example: 123e4567-e89b-12d3-a456-426614174000
     NotFoundError:
       type: object
       properties:
@@ -338,6 +319,25 @@ components:
           example: 'Invalid parameters: ''name'' field is required'
       required:
       - message
+    PipelineSlugQuery:
+      type: string
+      minLength: 1
+      description: Pipeline slug
+      example: email-summarizer
+    InternalServerError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Internal server error details
+          example: Internal server error occurred while processing the request
+      required:
+      - message
+    DatasetIdQuery:
+      type: string
+      format: uuid
+      description: Dataset ID
+      example: 123e4567-e89b-12d3-a456-426614174000
     UnauthorizedError:
       type: object
       properties:
@@ -355,24 +355,24 @@ components:
       schema:
         $ref: '#/components/schemas/TestCaseIdParam'
       required: true
-    PipelineSlugQueryParam:
-      in: query
-      name: pipelineSlug
-      description: Pipeline slug
-      schema:
-        $ref: '#/components/schemas/PipelineSlugQuery'
-    PipelineIdQueryParam:
-      in: query
-      name: pipelineId
-      description: Filter to the datasets for a specific pipeline by UUID
-      schema:
-        $ref: '#/components/schemas/PipelineIdQuery'
     DatasetIdQueryParam:
       in: query
       name: datasetId
       description: Dataset ID
       schema:
         $ref: '#/components/schemas/DatasetIdQuery'
+    PipelineIdQueryParam:
+      in: query
+      name: pipelineId
+      description: Filter to the datasets for a specific pipeline by UUID
+      schema:
+        $ref: '#/components/schemas/PipelineIdQuery'
+    PipelineSlugQueryParam:
+      in: query
+      name: pipelineSlug
+      description: Pipeline slug
+      schema:
+        $ref: '#/components/schemas/PipelineSlugQuery'
   securitySchemes:
     bearerAuth:
       type: http
