@@ -48,6 +48,9 @@ specificationVersion: '0.23'
 created: '2026-07-17'
 modified: '2026-07-19'
 image: https://mintcdn.com/gentrace/9dIPysEl4JbHm2X9/logo/dark.svg
+x-docs-platform: mintlify
+x-docs-platform-confidence: medium
+x-docs-platform-checked: 2026-10-03
 tags:
 - Company
 - Artificial Intelligence
@@ -132,6 +135,9 @@ apis:
   - type: APIReference
     url: https://docs.gentrace.ai/reference
 common:
+- type: CapabilityMap
+  url: capabilities/gentrace-capability-edges.yml
+  name: Gentrace Business Capability Map
 - type: DomainSecurity
   url: security/gentrace-domain-security.yml
 - type: AgenticAccess
