@@ -186,45 +186,6 @@ paths:
                 $ref: '#/components/schemas/InternalServerError'
 components:
   schemas:
-    CreateTestCase:
-      type: object
-      properties:
-        datasetId:
-          type: string
-          format: uuid
-          description: Dataset UUID
-          example: b2c3d4e5-f6a7-8901-2345-67890abcdef1
-        name:
-          type: string
-          minLength: 1
-          description: Test case name
-          example: Prompting with a SQL query that does not return any results
-        inputs:
-          type: object
-          additionalProperties: true
-          description: Test case inputs as a JSON object
-          example:
-            query: What is the capital of France?
-        expectedOutputs:
-          type: object
-          additionalProperties: true
-          default: {}
-          description: Optional expected outputs as a JSON object
-          example:
-            result: No results found
-      required:
-      - datasetId
-      - name
-      - inputs
-      additionalProperties: false
-      description: Test case creation parameters
-      example:
-        datasetId: b2c3d4e5-f6a7-8901-2345-67890abcdef1
-        name: Prompting with a SQL query that does not return any results
-        inputs:
-          query: What is the capital of France?
-        expectedOutputs:
-          result: No results found
     TestCase:
       type: object
       properties:
@@ -291,15 +252,82 @@ components:
       - pipelineId
       - archivedAt
       - deletedAt
-    TestCaseIdParam:
+    UnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Authentication error details
+          example: Invalid or expired API key
+      required:
+      - message
+    PipelineSlugQuery:
+      type: string
+      minLength: 1
+      description: Pipeline slug
+      example: email-summarizer
+    DatasetIdQuery:
       type: string
       format: uuid
-      description: Test Case UUID
+      description: Dataset ID
       example: 123e4567-e89b-12d3-a456-426614174000
     PipelineIdQuery:
       type: string
       format: uuid
       description: Filter to the datasets for a specific pipeline by UUID
+      example: 123e4567-e89b-12d3-a456-426614174000
+    CreateTestCase:
+      type: object
+      properties:
+        datasetId:
+          type: string
+          format: uuid
+          description: Dataset UUID
+          example: b2c3d4e5-f6a7-8901-2345-67890abcdef1
+        name:
+          type: string
+          minLength: 1
+          description: Test case name
+          example: Prompting with a SQL query that does not return any results
+        inputs:
+          type: object
+          additionalProperties: true
+          description: Test case inputs as a JSON object
+          example:
+            query: What is the capital of France?
+        expectedOutputs:
+          type: object
+          additionalProperties: true
+          default: {}
+          description: Optional expected outputs as a JSON object
+          example:
+            result: No results found
+      required:
+      - datasetId
+      - name
+      - inputs
+      additionalProperties: false
+      description: Test case creation parameters
+      example:
+        datasetId: b2c3d4e5-f6a7-8901-2345-67890abcdef1
+        name: Prompting with a SQL query that does not return any results
+        inputs:
+          query: What is the capital of France?
+        expectedOutputs:
+          result: No results found
+    InternalServerError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Internal server error details
+          example: Internal server error occurred while processing the request
+      required:
+      - message
+    TestCaseIdParam:
+      type: string
+      format: uuid
+      description: Test Case UUID
       example: 123e4567-e89b-12d3-a456-426614174000
     NotFoundError:
       type: object
@@ -319,35 +347,19 @@ components:
           example: 'Invalid parameters: ''name'' field is required'
       required:
       - message
-    PipelineSlugQuery:
-      type: string
-      minLength: 1
-      description: Pipeline slug
-      example: email-summarizer
-    InternalServerError:
-      type: object
-      properties:
-        message:
-          type: string
-          description: Internal server error details
-          example: Internal server error occurred while processing the request
-      required:
-      - message
-    DatasetIdQuery:
-      type: string
-      format: uuid
-      description: Dataset ID
-      example: 123e4567-e89b-12d3-a456-426614174000
-    UnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-          description: Authentication error details
-          example: Invalid or expired API key
-      required:
-      - message
   parameters:
+    PipelineSlugQueryParam:
+      in: query
+      name: pipelineSlug
+      description: Pipeline slug
+      schema:
+        $ref: '#/components/schemas/PipelineSlugQuery'
+    DatasetIdQueryParam:
+      in: query
+      name: datasetId
+      description: Dataset ID
+      schema:
+        $ref: '#/components/schemas/DatasetIdQuery'
     TestCaseIdPathParam:
       in: path
       name: id
@@ -355,24 +367,12 @@ components:
       schema:
         $ref: '#/components/schemas/TestCaseIdParam'
       required: true
-    DatasetIdQueryParam:
-      in: query
-      name: datasetId
-      description: Dataset ID
-      schema:
-        $ref: '#/components/schemas/DatasetIdQuery'
     PipelineIdQueryParam:
       in: query
       name: pipelineId
       description: Filter to the datasets for a specific pipeline by UUID
       schema:
         $ref: '#/components/schemas/PipelineIdQuery'
-    PipelineSlugQueryParam:
-      in: query
-      name: pipelineSlug
-      description: Pipeline slug
-      schema:
-        $ref: '#/components/schemas/PipelineSlugQuery'
   securitySchemes:
     bearerAuth:
       type: http

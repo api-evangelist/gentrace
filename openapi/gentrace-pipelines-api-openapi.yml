@@ -195,6 +195,15 @@ paths:
                 $ref: '#/components/schemas/InternalServerError'
 components:
   schemas:
+    UnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Authentication error details
+          example: Invalid or expired API key
+      required:
+      - message
     Pipeline:
       type: object
       properties:
@@ -252,6 +261,15 @@ components:
       - folderId
       - archivedAt
       - goldenDatasetId
+    InternalServerError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Internal server error details
+          example: Internal server error occurred while processing the request
+      required:
+      - message
     CreatePipeline:
       type: object
       properties:
@@ -277,6 +295,20 @@ components:
           default: null
       required:
       - slug
+    PipelineIdParam:
+      type: string
+      format: uuid
+      description: Pipeline UUID
+      example: 123e4567-e89b-12d3-a456-426614174000
+    NotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Resource not found details
+          example: Resource with ID '123e4567-e89b-12d3-a456-426614174000' not found
+      required:
+      - message
     SlugQuery:
       anyOf:
       - type: string
@@ -306,13 +338,13 @@ components:
         additionalProperties: false
       description: Filter pipelines by slug
       example: my-pipeline
-    NotFoundError:
+    BadRequestError:
       type: object
       properties:
         message:
           type: string
-          description: Resource not found details
-          example: Resource with ID '123e4567-e89b-12d3-a456-426614174000' not found
+          description: A description of the validation error
+          example: 'Invalid parameters: ''name'' field is required'
       required:
       - message
     UpdatePipeline:
@@ -335,15 +367,6 @@ components:
           type: boolean
           description: Whether the pipeline is archived
           example: false
-    BadRequestError:
-      type: object
-      properties:
-        message:
-          type: string
-          description: A description of the validation error
-          example: 'Invalid parameters: ''name'' field is required'
-      required:
-      - message
     FolderIdQuery:
       type:
       - string
@@ -351,29 +374,6 @@ components:
       format: uuid
       description: The ID of the folder to filter pipelines by
       example: 123e4567-e89b-12d3-a456-426614174000
-    InternalServerError:
-      type: object
-      properties:
-        message:
-          type: string
-          description: Internal server error details
-          example: Internal server error occurred while processing the request
-      required:
-      - message
-    PipelineIdParam:
-      type: string
-      format: uuid
-      description: Pipeline UUID
-      example: 123e4567-e89b-12d3-a456-426614174000
-    UnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-          description: Authentication error details
-          example: Invalid or expired API key
-      required:
-      - message
   parameters:
     PipelineIdPathParam:
       in: path
@@ -382,18 +382,18 @@ components:
       schema:
         $ref: '#/components/schemas/PipelineIdParam'
       required: true
-    SlugQueryParam:
-      in: query
-      name: slug
-      description: Filter pipelines by slug
-      schema:
-        $ref: '#/components/schemas/SlugQuery'
     FolderIdQueryParam:
       in: query
       name: folderId
       description: The ID of the folder to filter pipelines by
       schema:
         $ref: '#/components/schemas/FolderIdQuery'
+    SlugQueryParam:
+      in: query
+      name: slug
+      description: Filter pipelines by slug
+      schema:
+        $ref: '#/components/schemas/SlugQuery'
   securitySchemes:
     bearerAuth:
       type: http

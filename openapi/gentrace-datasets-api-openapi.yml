@@ -196,24 +196,6 @@ paths:
                 $ref: '#/components/schemas/InternalServerError'
 components:
   schemas:
-    ArchivedQuery:
-      type: boolean
-      description: Flag to include archived datasets
-      example: false
-    PipelineIdQuery:
-      type: string
-      format: uuid
-      description: Filter to the datasets for a specific pipeline by UUID
-      example: 123e4567-e89b-12d3-a456-426614174000
-    NotFoundError:
-      type: object
-      properties:
-        message:
-          type: string
-          description: Resource not found details
-          example: Resource with ID '123e4567-e89b-12d3-a456-426614174000' not found
-      required:
-      - message
     UpdateDataset:
       type: object
       properties:
@@ -235,13 +217,13 @@ components:
           type: boolean
           description: Archive the dataset
           example: true
-    BadRequestError:
+    UnauthorizedError:
       type: object
       properties:
         message:
           type: string
-          description: A description of the validation error
-          example: 'Invalid parameters: ''name'' field is required'
+          description: Authentication error details
+          example: Invalid or expired API key
       required:
       - message
     PipelineSlugQuery:
@@ -249,11 +231,25 @@ components:
       minLength: 1
       description: Pipeline slug
       example: email-summarizer
+    PipelineIdQuery:
+      type: string
+      format: uuid
+      description: Filter to the datasets for a specific pipeline by UUID
+      example: 123e4567-e89b-12d3-a456-426614174000
     DatasetIdParam:
       type: string
       format: uuid
       description: Dataset UUID
       example: 123e4567-e89b-12d3-a456-426614174000
+    InternalServerError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Internal server error details
+          example: Internal server error occurred while processing the request
+      required:
+      - message
     CreateDataset:
       type: object
       properties:
@@ -283,13 +279,26 @@ components:
       required:
       - name
       - description
-    InternalServerError:
+    ArchivedQuery:
+      type: boolean
+      description: Flag to include archived datasets
+      example: false
+    NotFoundError:
       type: object
       properties:
         message:
           type: string
-          description: Internal server error details
-          example: Internal server error occurred while processing the request
+          description: Resource not found details
+          example: Resource with ID '123e4567-e89b-12d3-a456-426614174000' not found
+      required:
+      - message
+    BadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: A description of the validation error
+          example: 'Invalid parameters: ''name'' field is required'
       required:
       - message
     Dataset:
@@ -336,16 +345,13 @@ components:
       - description
       - archivedAt
       - pipelineId
-    UnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-          description: Authentication error details
-          example: Invalid or expired API key
-      required:
-      - message
   parameters:
+    ArchivedQueryParam:
+      in: query
+      name: archived
+      description: Flag to include archived datasets
+      schema:
+        $ref: '#/components/schemas/ArchivedQuery'
     DatasetIdPathParam:
       in: path
       name: id
@@ -353,24 +359,18 @@ components:
       schema:
         $ref: '#/components/schemas/DatasetIdParam'
       required: true
-    PipelineIdQueryParam:
-      in: query
-      name: pipelineId
-      description: Filter to the datasets for a specific pipeline by UUID
-      schema:
-        $ref: '#/components/schemas/PipelineIdQuery'
-    ArchivedQueryParam:
-      in: query
-      name: archived
-      description: Flag to include archived datasets
-      schema:
-        $ref: '#/components/schemas/ArchivedQuery'
     PipelineSlugQueryParam:
       in: query
       name: pipelineSlug
       description: Pipeline slug
       schema:
         $ref: '#/components/schemas/PipelineSlugQuery'
+    PipelineIdQueryParam:
+      in: query
+      name: pipelineId
+      description: Filter to the datasets for a specific pipeline by UUID
+      schema:
+        $ref: '#/components/schemas/PipelineIdQuery'
   securitySchemes:
     bearerAuth:
       type: http

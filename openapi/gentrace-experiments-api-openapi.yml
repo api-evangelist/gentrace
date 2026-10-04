@@ -199,20 +199,20 @@ components:
       format: uuid
       description: Experiment UUID
       example: 123e4567-e89b-12d3-a456-426614174000
+    UnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Authentication error details
+          example: Invalid or expired API key
+      required:
+      - message
     PipelineIdQuery:
       type: string
       format: uuid
       description: Filter to the datasets for a specific pipeline by UUID
       example: 123e4567-e89b-12d3-a456-426614174000
-    NotFoundError:
-      type: object
-      properties:
-        message:
-          type: string
-          description: Resource not found details
-          example: Resource with ID '123e4567-e89b-12d3-a456-426614174000' not found
-      required:
-      - message
     Experiment:
       type: object
       properties:
@@ -254,24 +254,6 @@ components:
       - name
       - pipelineId
       - metadata
-    BadRequestError:
-      type: object
-      properties:
-        message:
-          type: string
-          description: A description of the validation error
-          example: 'Invalid parameters: ''name'' field is required'
-      required:
-      - message
-    UnauthorizedError:
-      type: object
-      properties:
-        message:
-          type: string
-          description: Authentication error details
-          example: Invalid or expired API key
-      required:
-      - message
     CreateExperiment:
       type: object
       properties:
@@ -336,13 +318,25 @@ components:
           - EVALUATING
           description: Status
           example: GENERATING
+    NotFoundError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Resource not found details
+          example: Resource with ID '123e4567-e89b-12d3-a456-426614174000' not found
+      required:
+      - message
+    BadRequestError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: A description of the validation error
+          example: 'Invalid parameters: ''name'' field is required'
+      required:
+      - message
   parameters:
-    PipelineIdQueryParam:
-      in: query
-      name: pipelineId
-      description: Filter to the datasets for a specific pipeline by UUID
-      schema:
-        $ref: '#/components/schemas/PipelineIdQuery'
     ExperimentIdPathParam:
       in: path
       name: id
@@ -350,6 +344,12 @@ components:
       schema:
         $ref: '#/components/schemas/ExperimentIdParam'
       required: true
+    PipelineIdQueryParam:
+      in: query
+      name: pipelineId
+      description: Filter to the datasets for a specific pipeline by UUID
+      schema:
+        $ref: '#/components/schemas/PipelineIdQuery'
   securitySchemes:
     bearerAuth:
       type: http
