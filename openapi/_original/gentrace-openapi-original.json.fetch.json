@@ -1,0 +1,12 @@
+{
+ "url": "https://raw.githubusercontent.com/gentrace/gentrace-openapi/HEAD/spec.json",
+ "requested_url": "https://raw.githubusercontent.com/gentrace/gentrace-openapi/HEAD/spec.json",
+ "status": 200,
+ "content_type": "text/plain; charset=utf-8",
+ "bytes": 54623,
+ "sha256": "76bde656b16e9265e73ae9d73fe5f8fbc259d33390fc6ce34b662662a05530c1",
+ "fetched_at": "2026-10-04",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "byte-identical",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the archived file is byte-identical to what the provider serves."
+}
