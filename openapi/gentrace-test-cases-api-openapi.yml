@@ -186,6 +186,25 @@ paths:
                 $ref: '#/components/schemas/InternalServerError'
 components:
   schemas:
+    DatasetIdQuery:
+      type: string
+      format: uuid
+      description: Dataset ID
+      example: 123e4567-e89b-12d3-a456-426614174000
+    PipelineSlugQuery:
+      type: string
+      minLength: 1
+      description: Pipeline slug
+      example: email-summarizer
+    UnauthorizedError:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Authentication error details
+          example: Invalid or expired API key
+      required:
+      - message
     TestCase:
       type: object
       properties:
@@ -252,30 +271,15 @@ components:
       - pipelineId
       - archivedAt
       - deletedAt
-    UnauthorizedError:
+    InternalServerError:
       type: object
       properties:
         message:
           type: string
-          description: Authentication error details
-          example: Invalid or expired API key
+          description: Internal server error details
+          example: Internal server error occurred while processing the request
       required:
       - message
-    PipelineSlugQuery:
-      type: string
-      minLength: 1
-      description: Pipeline slug
-      example: email-summarizer
-    DatasetIdQuery:
-      type: string
-      format: uuid
-      description: Dataset ID
-      example: 123e4567-e89b-12d3-a456-426614174000
-    PipelineIdQuery:
-      type: string
-      format: uuid
-      description: Filter to the datasets for a specific pipeline by UUID
-      example: 123e4567-e89b-12d3-a456-426614174000
     CreateTestCase:
       type: object
       properties:
@@ -315,19 +319,24 @@ components:
           query: What is the capital of France?
         expectedOutputs:
           result: No results found
-    InternalServerError:
+    BadRequestError:
       type: object
       properties:
         message:
           type: string
-          description: Internal server error details
-          example: Internal server error occurred while processing the request
+          description: A description of the validation error
+          example: 'Invalid parameters: ''name'' field is required'
       required:
       - message
     TestCaseIdParam:
       type: string
       format: uuid
       description: Test Case UUID
+      example: 123e4567-e89b-12d3-a456-426614174000
+    PipelineIdQuery:
+      type: string
+      format: uuid
+      description: Filter to the datasets for a specific pipeline by UUID
       example: 123e4567-e89b-12d3-a456-426614174000
     NotFoundError:
       type: object
@@ -338,28 +347,19 @@ components:
           example: Resource with ID '123e4567-e89b-12d3-a456-426614174000' not found
       required:
       - message
-    BadRequestError:
-      type: object
-      properties:
-        message:
-          type: string
-          description: A description of the validation error
-          example: 'Invalid parameters: ''name'' field is required'
-      required:
-      - message
   parameters:
-    PipelineSlugQueryParam:
-      in: query
-      name: pipelineSlug
-      description: Pipeline slug
-      schema:
-        $ref: '#/components/schemas/PipelineSlugQuery'
     DatasetIdQueryParam:
       in: query
       name: datasetId
       description: Dataset ID
       schema:
         $ref: '#/components/schemas/DatasetIdQuery'
+    PipelineSlugQueryParam:
+      in: query
+      name: pipelineSlug
+      description: Pipeline slug
+      schema:
+        $ref: '#/components/schemas/PipelineSlugQuery'
     TestCaseIdPathParam:
       in: path
       name: id
