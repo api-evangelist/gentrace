@@ -402,3 +402,9 @@ components:
 externalDocs:
   url: https://github.com/gentrace/gentrace-openapi
   description: Gentrace OpenAPI Github
+x-provenance:
+  method: harvested
+  publisher: Gentrace
+  source: https://raw.githubusercontent.com/gentrace/gentrace-openapi/HEAD/spec.json
+  note: split by refine-openapis from the provider's own published document, verified by fetch (openapi/_original/*.fetch.json);
+    stamped by stamp-openapi-provenance.py (roadmap#793)
