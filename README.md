@@ -64,6 +64,82 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Gentrace is a company surfaced as a portfolio company of matrix-partners and added to the API Evangelist network as a stub for enrichment. Sector: ai. This profile is a lead awaiting the enrichment pipeline.
+> **No longer operating.** This company or product has shut down, been discontinued, or been deprecated. This profile is kept as a historical record and is not maintained or rated.
 
-Backed by: matrix-partners — https://gentrace.ai
+Gentrace was a developer platform for evaluating and testing LLM and AI applications ("evals as infrastructure"). It provided pipelines, datasets, experiments, and test cases so teams could run offline and online evaluations, grade model outputs, track regressions, and observe AI features in production via OpenTelemetry-based instrumentation. The platform shipped a REST API (v4) secured with bearer API keys, first-party Python and TypeScript/Node SDKs, and a documented object model of pipelines, datasets, experiments, and test cases. Gentrace was based in San Francisco and backed by Matrix Partners. The company has since shut down its hosted product, but its OpenAPI specification, SDK packages, and documentation mirror remain publicly available.
+
+**Areas:** Company · Artificial Intelligence · LLM · Evaluation · Testing · Observability · Machine Learning · Developer Tools · Defunct
+
+## Gentrace on APIs.io (historical record)
+
+Everything profiled for Gentrace is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/gentrace/](https://apis.io/providers/gentrace/)** — or go straight to one of the APIs or properties below.
+
+### APIs (4)
+
+- [Gentrace Datasets API](https://apis.io/apis/gentrace/gentrace-datasets-api/) — The Datasets API from Gentrace — 2 operation(s) for datasets.
+- [Gentrace Experiments API](https://apis.io/apis/gentrace/gentrace-experiments-api/) — The Experiments API from Gentrace — 2 operation(s) for experiments.
+- [Gentrace Pipelines API](https://apis.io/apis/gentrace/gentrace-pipelines-api/) — The Pipelines API from Gentrace — 2 operation(s) for pipelines.
+- [Gentrace Test Cases API](https://apis.io/apis/gentrace/gentrace-test-cases-api/) — The Test Cases API from Gentrace — 2 operation(s) for test cases.
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [gentrace](https://apis.io/servers/gentrace/gentrace/)
+
+#### Agentic access (1)
+
+Which operations an agent can call, which act, and which need a human in the loop.
+
+- [Gentrace Agentic Access](https://apis.io/agentic-access/gentrace/gentrace-agentic-access/)
+
+#### Collections (4)
+
+Postman and Open Collection request collections.
+
+- [Gentrace Datasets API](https://apis.io/collections/gentrace/open-gentrace-datasets-api/)
+- [Gentrace Datasets Experiments API](https://apis.io/collections/gentrace/open-gentrace-experiments-api/)
+- [Gentrace Datasets Pipelines API](https://apis.io/collections/gentrace/open-gentrace-pipelines-api/)
+- [Gentrace Datasets TestCases API](https://apis.io/collections/gentrace/open-gentrace-testcases-api/)
+
+#### Overlays (1)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Gentrace Openapi Overlay](https://apis.io/overlays/gentrace/gentrace-openapi-overlay/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Gentrace Authentication](https://apis.io/security/gentrace/gentrace-authentication/)
+- [Gentrace Domain Security](https://apis.io/security/gentrace/gentrace-domain-security/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://gentrace.ai)
+- [Documentation](https://docs.gentrace.ai)
+- [API reference](https://docs.gentrace.ai/reference)
+- [GitHub](https://github.com/gentrace)
+
+## API Evangelist rating
+
+**Not rated** — this company is recorded as no longer operating, so no score is published. If it is in fact operating, say so on this repository and it will be re-profiled.
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Gentrace: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/gentrace/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
